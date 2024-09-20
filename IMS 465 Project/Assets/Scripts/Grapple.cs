@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class vendelyGrappleTest : MonoBehaviour
+public class Grapple : MonoBehaviour
 {
     [Header("Grapple Properties")]
     public float distance;
@@ -17,39 +17,44 @@ public class vendelyGrappleTest : MonoBehaviour
 
     private Vector2 direction;
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // left click
         {
+            // Get mouse position and direction from Player
             Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             direction = mouse - transform.position;
 
+            // Generate collision
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
 
             Debug.Log(hit.collider);
 
-
+            // Reinstate Line Renderer and set start to Player
             lineR.positionCount = 2;
             lineR.SetPosition(0, transform.position);
 
-            if (hit.collider)
+            if (hit.collider) // if grappling hook hit something
             {
+                // Create hook prefab at collision as child of object
                 myHook = Instantiate(hook, hit.transform, true);
                 myHook.transform.position = hit.point;
                 myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
 
+                // Set end of line
                 lineR.SetPosition(1, hit.point);
             }
-            else
+            else // if grappling hook missed
             {
-                Debug.Log(direction.magnitude);
-                if (direction.magnitude > distance)
+                // check if mouse is in range
+                if (direction.magnitude > distance) 
                 {
-                    lineR.SetPosition(1, direction.normalized * distance);
+                    // only travel max distance
+                    lineR.SetPosition(1, direction.normalized * distance); 
                 }
                 else
                 {
+                    // travel to mouse
                     lineR.SetPosition(1, mouse);
                 }
             }
@@ -58,8 +63,9 @@ public class vendelyGrappleTest : MonoBehaviour
         }
 
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0)) // left click
         {
+            // Destroy hook and line
             if (myHook)
             {
                 Destroy(myHook);
