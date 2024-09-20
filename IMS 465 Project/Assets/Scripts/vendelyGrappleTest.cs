@@ -9,7 +9,6 @@ public class vendelyGrappleTest : MonoBehaviour
 
     [Header("Hook")]
     public GameObject hook;
-    public float hookSize;
 
     private GameObject myHook;
 
@@ -27,7 +26,7 @@ public class vendelyGrappleTest : MonoBehaviour
             Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             direction = mouse - transform.position;
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
 
             Debug.Log(hit.collider);
 
@@ -37,17 +36,23 @@ public class vendelyGrappleTest : MonoBehaviour
 
             if (hit.collider)
             {
-                myHook = Instantiate(hook, hit.transform, false);
+                myHook = Instantiate(hook, hit.transform, true);
                 myHook.transform.position = hit.point;
-                myHook.transform.localScale *= hookSize;
                 myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
 
                 lineR.SetPosition(1, hit.point);
             }
             else
             {
-
-                lineR.SetPosition(1, mouse);
+                Debug.Log(direction.magnitude);
+                if (direction.magnitude > distance)
+                {
+                    lineR.SetPosition(1, direction.normalized * distance);
+                }
+                else
+                {
+                    lineR.SetPosition(1, mouse);
+                }
             }
 
 

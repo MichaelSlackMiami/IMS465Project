@@ -619,9 +619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87414c112c90f549aa9a4738ccfae2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 5
+  distance: 7
   hook: {fileID: 8629033383342186479, guid: 4460a72211845e648bace613b3705a0e, type: 3}
-  hookSize: 0.5
   lineR: {fileID: 1750233341}
 --- !u!120 &1750233341
 LineRenderer:
