@@ -17,6 +17,9 @@ public class Grapple : MonoBehaviour
 
     private Vector2 direction;
 
+    [Header("Player")]
+    public Rigidbody2D player;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // left click
@@ -43,6 +46,9 @@ public class Grapple : MonoBehaviour
 
                 // Set end of line
                 lineR.SetPosition(1, hit.point);
+
+                //Enable the method that pulls the player toward the hook
+                PullPlayer(true);
             }
             else // if grappling hook missed
             {
@@ -72,6 +78,16 @@ public class Grapple : MonoBehaviour
             }
 
             lineR.positionCount = 0;
+
+            //Disbale the line's pull on the player
+            PullPlayer(false);
+        }
+    }
+    void PullPlayer(bool enabled)
+    {
+        if (enabled == true)
+        {
+            player.AddForce(myHook.transform.position - player.transform.position);
         }
     }
 }
