@@ -48,16 +48,15 @@ public class Grapple : MonoBehaviour
                 lineR.SetPosition(1, hit.point);
 
                 //Enable the method that pulls the player toward the hook
-                //PullPlayer(true);
+                PullPlayer(true);
             }
             else // if grappling hook missed
             {
                 // check if mouse is in range
                 if (direction.magnitude > distance) 
                 {
-
                     // only travel max distance
-                    lineR.SetPosition(1, new Vector2(transform.position.x, transform.position.y) + (direction.normalized * distance)); 
+                    lineR.SetPosition(1, direction.normalized * distance); 
                 }
                 else
                 {
@@ -81,24 +80,14 @@ public class Grapple : MonoBehaviour
             lineR.positionCount = 0;
 
             //Disbale the line's pull on the player
-            //PullPlayer(false);
-        }
-
-        // Pull player whenever hook is active
-        PullPlayer(myHook, 3f);
-
-        // Update line positions when hook is active
-        if (myHook)
-        {
-            lineR.SetPosition(0, transform.position);
-            lineR.SetPosition(1, myHook.transform.position);
+            PullPlayer(false);
         }
     }
-    void PullPlayer(bool enabled, float scalar)
+    void PullPlayer(bool enabled)
     {
         if (enabled == true)
         {
-            player.AddForce(scalar * (myHook.transform.position - player.transform.position) * Time.deltaTime);
+            player.AddForce(myHook.transform.position - player.transform.position);
         }
     }
 }
