@@ -32,6 +32,14 @@ public class Grapple : MonoBehaviour
     [Header("Object")]
     private RaycastHit2D hit;
 
+    [Header("Debug")]
+    public GameObject rangeIndicator;
+
+    void Start()
+    {
+        rangeIndicator.transform.localScale *= (2 * distance);
+    }
+
     void Update()
     {
         myPosition = transform.position;
