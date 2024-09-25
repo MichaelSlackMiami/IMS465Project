@@ -6,6 +6,8 @@ public class Grapple : MonoBehaviour
 {
     [Header("Grapple Properties")]
     public float distance;
+    public float pullStrength;
+    public float rotationalStrength;
 
     [Header("Hook")]
     public GameObject hook;
@@ -47,8 +49,8 @@ public class Grapple : MonoBehaviour
                 // Set end of line
                 lineR.SetPosition(1, hit.point);
 
-                //Enable the method that pulls the player toward the hook
-                PullPlayer(true);
+                //Rotate whatever hook hit
+                hit.rigidbody.AddTorque(rotationalStrength, ForceMode2D.Impulse);
             }
             else // if grappling hook missed
             {
@@ -68,6 +70,15 @@ public class Grapple : MonoBehaviour
 
         }
 
+        if (Input.GetMouseButton(0)) // Left click held
+        {
+            //Pull the player
+            player.AddForce((myHook.transform.position - player.transform.position) * pullStrength);
+
+            //Move the rope with the player
+            lineR.SetPosition(0, transform.position);
+        }
+
 
         if (Input.GetMouseButtonUp(0)) // left click
         {
@@ -78,16 +89,6 @@ public class Grapple : MonoBehaviour
             }
 
             lineR.positionCount = 0;
-
-            //Disbale the line's pull on the player
-            PullPlayer(false);
-        }
-    }
-    void PullPlayer(bool enabled)
-    {
-        if (enabled == true)
-        {
-            player.AddForce(myHook.transform.position - player.transform.position);
         }
     }
 }
