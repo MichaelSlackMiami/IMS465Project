@@ -14,29 +14,19 @@ public class Grapple : MonoBehaviour
 
     [Header("Line")]
     public LineRenderer lineR;
-    public bool lineOut;
 
     private Vector2 direction;
 
     [Header("Player")]
     public Rigidbody2D player;
 
-    private Vector2 playerPosition2D;
-    private Vector2 mouse;
-    private Vector2 targetVector;
-
     void Update()
     {
-        // Get location in 2d
-        playerPosition2D = new Vector2(transform.position.x, transform.position.y);
-
         if (Input.GetMouseButtonDown(0)) // left click
         {
-
             // Get mouse position and direction from Player
-            mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            direction = mouse - playerPosition2D;
-
+            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            direction = mouse - transform.position;
 
             // Generate collision
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
@@ -44,9 +34,8 @@ public class Grapple : MonoBehaviour
             Debug.Log(hit.collider);
 
             // Reinstate Line Renderer and set start to Player
-            lineOut = true;
             lineR.positionCount = 2;
-            lineR.SetPosition(0, playerPosition2D);
+            lineR.SetPosition(0, transform.position);
 
             if (hit.collider) // if grappling hook hit something
             {
@@ -66,13 +55,14 @@ public class Grapple : MonoBehaviour
                 // check if mouse is in range
                 if (direction.magnitude > distance) 
                 {
-                    // travel as far as possible towards mouse
-                    targetVector = direction.normalized * distance;
+
+                    // only travel max distance
+                    lineR.SetPosition(1, new Vector2(transform.position.x, transform.position.y) + (direction.normalized * distance)); 
                 }
                 else
                 {
                     // travel to mouse
-                    targetVector = mouse - playerPosition2D;
+                    lineR.SetPosition(1, mouse);
                 }
             }
 
@@ -88,7 +78,6 @@ public class Grapple : MonoBehaviour
                 Destroy(myHook);
             }
 
-            lineOut = false;
             lineR.positionCount = 0;
 
             //Disbale the line's pull on the player
@@ -99,21 +88,10 @@ public class Grapple : MonoBehaviour
         PullPlayer(myHook, 3f);
 
         // Update line positions when hook is active
-        if (lineOut)
+        if (myHook)
         {
-            // Line stays with the player
             lineR.SetPosition(0, transform.position);
-
-            if (myHook)
-            {
-                // Line stays connected to hook
-                lineR.SetPosition(1, myHook.transform.position);
-            }
-            else
-            {
-                // Moves the line with the player
-                lineR.SetPosition(1, targetVector + playerPosition2D);
-            }
+            lineR.SetPosition(1, myHook.transform.position);
         }
     }
     void PullPlayer(bool enabled, float scalar)
