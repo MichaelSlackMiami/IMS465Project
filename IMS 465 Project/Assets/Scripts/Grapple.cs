@@ -9,35 +9,45 @@ public class Grapple : MonoBehaviour
     public float pullStrength;
     public float rotationalStrength;
 
+
     [Header("Hook")]
     public GameObject hook;
 
     private GameObject myHook;
 
+
     [Header("Line")]
     public LineRenderer lineR;
+    public bool lineOut;
 
     private Vector2 direction;
 
+
     [Header("Player")]
     public Rigidbody2D player;
+    private Vector2 myPosition;
+    private Vector2 mouse;
+
+
+    [Header("Object")]
+    private RaycastHit2D hit;
 
     void Update()
     {
+        myPosition = transform.position;
+
         if (Input.GetMouseButtonDown(0)) // left click
         {
             // Get mouse position and direction from Player
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            direction = mouse - transform.position;
+            mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            direction = (mouse - myPosition).normalized;
 
             // Generate collision
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
-
-            Debug.Log(hit.collider);
+            hit = Physics2D.Raycast(transform.position, direction, distance);
 
             // Reinstate Line Renderer and set start to Player
+            lineOut = true;
             lineR.positionCount = 2;
-            lineR.SetPosition(0, transform.position);
 
             if (hit.collider) // if grappling hook hit something
             {
@@ -46,37 +56,18 @@ public class Grapple : MonoBehaviour
                 myHook.transform.position = hit.point;
                 myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
 
-                // Set end of line
-                lineR.SetPosition(1, hit.point);
-
                 //Rotate whatever hook hit
                 hit.rigidbody.AddTorque(rotationalStrength, ForceMode2D.Impulse);
             }
-            else // if grappling hook missed
-            {
-                // check if mouse is in range
-                if (direction.magnitude > distance) 
-                {
-                    // only travel max distance
-                    lineR.SetPosition(1, direction.normalized * distance); 
-                }
-                else
-                {
-                    // travel to mouse
-                    lineR.SetPosition(1, mouse);
-                }
-            }
-
-
         }
 
         if (Input.GetMouseButton(0)) // Left click held
         {
-            //Pull the player
-            player.AddForce((myHook.transform.position - player.transform.position) * pullStrength);
-
-            //Move the rope with the player
-            lineR.SetPosition(0, transform.position);
+            if (myHook)
+            {
+                //Pull the player
+                player.AddForce((myHook.transform.position - player.transform.position) * pullStrength);
+            }
         }
 
 
@@ -88,7 +79,29 @@ public class Grapple : MonoBehaviour
                 Destroy(myHook);
             }
 
+            lineOut = false;
             lineR.positionCount = 0;
+        }
+
+        if (lineOut)
+        {
+            UpdateLine();
+        }
+    }
+
+    private void UpdateLine()
+    {
+        lineR.SetPosition(0, transform.position);
+        Debug.Log(myHook);
+        Debug.Log(lineOut);
+
+        if (myHook)
+        {
+            lineR.SetPosition(1, myHook.transform.position);
+        }
+        else
+        {
+            lineR.SetPosition(1, myPosition + (direction * distance));
         }
     }
 }
