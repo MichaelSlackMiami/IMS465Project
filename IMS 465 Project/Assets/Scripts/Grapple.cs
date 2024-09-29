@@ -7,8 +7,8 @@ public class Grapple : MonoBehaviour
     [Header("Grapple Properties")]
     public float distance;
     public float pullStrength;
-    public float rotationalStrength;
 
+    private Vector2 force;
 
     [Header("Hook")]
     public GameObject hook;
@@ -37,11 +37,13 @@ public class Grapple : MonoBehaviour
 
     void Start()
     {
+        // Set the debug range indicator's size
         rangeIndicator.transform.localScale *= (2 * distance);
     }
 
     void Update()
     {
+        // Convert position to 2d
         myPosition = transform.position;
 
         if (Input.GetMouseButtonDown(0)) // left click
@@ -63,9 +65,6 @@ public class Grapple : MonoBehaviour
                 myHook = Instantiate(hook, hit.transform, true);
                 myHook.transform.position = hit.point;
                 myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
-
-                //Rotate whatever hook hit
-                hit.rigidbody.AddTorque(rotationalStrength, ForceMode2D.Impulse);
             }
         }
 
@@ -73,20 +72,30 @@ public class Grapple : MonoBehaviour
         {
             if (myHook)
             {
-                //Pull the player
-                player.AddForce((myHook.transform.position - player.transform.position) * pullStrength);
+                // Calculate the grapple force
+                force = (myHook.transform.position - player.transform.position).normalized * pullStrength * Time.deltaTime;
+
+                // Pull the player
+                player.AddForce(force);
+
+                // Pull the grappled object
+                if (hit)
+                {
+                    hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
+                }
             }
         }
 
 
         if (Input.GetMouseButtonUp(0)) // left click
         {
-            // Destroy hook and line
+            // Destroy hook
             if (myHook)
             {
                 Destroy(myHook);
             }
 
+            // Destroy  line
             lineOut = false;
             lineR.positionCount = 0;
         }
@@ -99,16 +108,17 @@ public class Grapple : MonoBehaviour
 
     private void UpdateLine()
     {
+        // Anchor the first point on the player
         lineR.SetPosition(0, transform.position);
-        Debug.Log(myHook);
-        Debug.Log(lineOut);
 
         if (myHook)
         {
+            // Set the second point to the hook
             lineR.SetPosition(1, myHook.transform.position);
         }
         else
         {
+            // Set the second point to the missed location
             lineR.SetPosition(1, myPosition + (direction * distance));
         }
     }

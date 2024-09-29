@@ -399,11 +399,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1511804541833223980, guid: 85529ae1bd67a0c42bac80eaaa3815e1, type: 3}
       propertyPath: m_Name
-      value: Asteroid (1)
+      value: Asteroid (M)
       objectReference: {fileID: 0}
     - target: {fileID: 4714708971023799806, guid: 85529ae1bd67a0c42bac80eaaa3815e1, type: 3}
       propertyPath: m_Mass
-      value: 1
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4714708971023799806, guid: 85529ae1bd67a0c42bac80eaaa3815e1, type: 3}
       propertyPath: m_Constraints
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 7
-  pullStrength: 0.2
+  pullStrength: 200
   rotationalStrength: 0.3
   hook: {fileID: 8629033383342186479, guid: 4460a72211845e648bace613b3705a0e, type: 3}
   lineR: {fileID: 681757964}
@@ -717,11 +717,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1511804541833223980, guid: 85529ae1bd67a0c42bac80eaaa3815e1, type: 3}
       propertyPath: m_Name
-      value: Asteroid (2)
+      value: Asteroid (S)
       objectReference: {fileID: 0}
     - target: {fileID: 4714708971023799806, guid: 85529ae1bd67a0c42bac80eaaa3815e1, type: 3}
       propertyPath: m_Mass
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4714708971023799806, guid: 85529ae1bd67a0c42bac80eaaa3815e1, type: 3}
       propertyPath: m_Constraints
@@ -794,11 +794,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1511804541833223980, guid: 85529ae1bd67a0c42bac80eaaa3815e1, type: 3}
       propertyPath: m_Name
-      value: Asteroid
+      value: Asteroid (L)
       objectReference: {fileID: 0}
     - target: {fileID: 4714708971023799806, guid: 85529ae1bd67a0c42bac80eaaa3815e1, type: 3}
       propertyPath: m_Mass
-      value: 1
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4714708971023799806, guid: 85529ae1bd67a0c42bac80eaaa3815e1, type: 3}
       propertyPath: m_Simulated
