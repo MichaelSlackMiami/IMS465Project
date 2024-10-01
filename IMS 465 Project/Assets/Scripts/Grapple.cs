@@ -5,7 +5,7 @@ using UnityEngine;
 public class Grapple : MonoBehaviour
 {
     [Header("Grapple Properties")]
-    public float distance;
+    public float maxDistance;
     public float pullStrength;
 
     private Vector2 force;
@@ -26,7 +26,7 @@ public class Grapple : MonoBehaviour
 
     [Header("Player")]
     public Rigidbody2D player;
-    private Vector2 myPosition;
+    private Vector2 playerPosition;
     private Vector2 mouse;
 
 
@@ -39,22 +39,22 @@ public class Grapple : MonoBehaviour
     void Start()
     {
         // Set the debug range indicator's size
-        rangeIndicator.transform.localScale *= (2 * distance);
+        rangeIndicator.transform.localScale *= (2 * maxDistance);
     }
 
     void Update()
     {
         // Convert position to 2d
-        myPosition = transform.position;
+        playerPosition = transform.position;
 
         if (Input.GetMouseButtonDown(0)) // left click
         {
             // Get mouse position and direction from Player
             mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            direction = (mouse - myPosition).normalized;
+            direction = (mouse - playerPosition).normalized;
 
             // Generate collision
-            hit = Physics2D.Raycast(transform.position, direction, distance);
+            hit = Physics2D.Raycast(transform.position, direction, maxDistance);
 
             // Reinstate Line Renderer and set start to Player
             lineOut = true;
@@ -91,7 +91,7 @@ public class Grapple : MonoBehaviour
                 // Check if grapple is exceeding its max length
                 if (grappleLength.magnitude > hit.distance)
                 {
-                    Debug.Log("Grapple is too long!");
+                    Debug.Log("Grapple is too long! Length of " + grappleLength.magnitude + " exceeds max lenth of " + hit.distance);
                 }
             }
         }
@@ -119,7 +119,7 @@ public class Grapple : MonoBehaviour
     private void UpdateLine()
     {
         // Anchor the first point on the player
-        lineR.SetPosition(0, transform.position);
+        lineR.SetPosition(0, playerPosition);
 
         if (myHook)
         {
@@ -129,7 +129,7 @@ public class Grapple : MonoBehaviour
         else
         {
             // Set the second point to the missed location
-            lineR.SetPosition(1, myPosition + (direction * distance));
+            lineR.SetPosition(1, playerPosition + (direction * maxDistance));
         }
     }
 }
