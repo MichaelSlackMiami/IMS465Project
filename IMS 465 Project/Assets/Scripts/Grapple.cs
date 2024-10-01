@@ -21,6 +21,7 @@ public class Grapple : MonoBehaviour
     public bool lineOut;
 
     private Vector2 direction;
+    private Vector3 grappleLength;
 
 
     [Header("Player")]
@@ -82,6 +83,15 @@ public class Grapple : MonoBehaviour
                 if (hit)
                 {
                     hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
+                }
+
+                // Update the grapple length
+                grappleLength = lineR.GetPosition(0) - lineR.GetPosition(1);
+
+                // Check if grapple is exceeding its max length
+                if (grappleLength.magnitude > hit.distance)
+                {
+                    Debug.Log("Grapple is too long!");
                 }
             }
         }
