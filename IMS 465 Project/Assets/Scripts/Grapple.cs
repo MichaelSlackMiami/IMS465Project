@@ -20,9 +20,10 @@ public class Grapple : MonoBehaviour
     public LineRenderer lineR;
     public bool lineOut;
 
-    private Vector2 direction;
+    private Vector2 initialDirection;
+    private Vector2 hookDirection;
     private Vector3 grappleLength;
-
+    private Vector2 swingForce;
 
     [Header("Player")]
     public Rigidbody2D player;
@@ -32,6 +33,7 @@ public class Grapple : MonoBehaviour
 
     [Header("Object")]
     private RaycastHit2D hit;
+    private float massRatio;
 
     [Header("Debug")]
     public GameObject rangeIndicator;
@@ -51,10 +53,10 @@ public class Grapple : MonoBehaviour
         {
             // Get mouse position and direction from Player
             mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            direction = (mouse - playerPosition).normalized;
+            initialDirection = (mouse - playerPosition).normalized;
 
             // Generate collision
-            hit = Physics2D.Raycast(transform.position, direction, maxDistance);
+            hit = Physics2D.Raycast(transform.position, initialDirection, maxDistance);
 
             // Reinstate Line Renderer and set start to Player
             lineOut = true;
@@ -73,8 +75,10 @@ public class Grapple : MonoBehaviour
         {
             if (myHook)
             {
+                hookDirection = (myHook.transform.position - player.transform.position).normalized;
+
                 // Calculate the grapple force
-                force = (myHook.transform.position - player.transform.position).normalized * pullStrength * Time.deltaTime;
+                force =  hookDirection * pullStrength * Time.deltaTime;
 
                 // Pull the player
                 player.AddForce(force);
@@ -91,7 +95,7 @@ public class Grapple : MonoBehaviour
                 // Check if grapple is exceeding its max length
                 if (grappleLength.magnitude > hit.distance)
                 {
-                    Debug.Log("Grapple is too long! Length of " + grappleLength.magnitude + " exceeds max lenth of " + hit.distance);
+                    SwingOnLine();
                 }
             }
         }
@@ -129,7 +133,24 @@ public class Grapple : MonoBehaviour
         else
         {
             // Set the second point to the missed location
-            lineR.SetPosition(1, playerPosition + (direction * maxDistance));
+            lineR.SetPosition(1, playerPosition + (initialDirection * maxDistance));
+        }
+    }
+
+    private void SwingOnLine()
+    {
+        swingForce = -hookDirection * player.velocity.magnitude * Vector2.Dot(hookDirection, player.velocity.normalized);
+
+        massRatio = hit.rigidbody.mass / player.mass;
+
+        Debug.Log("Swinging!   " + swingForce.x + ", " + swingForce.y);
+        Debug.Log("Mass Ratio   " + massRatio);
+
+        player.AddForce(swingForce * massRatio);
+
+        if (hit)
+        {
+            hit.rigidbody.AddForceAtPosition(-swingForce / massRatio, myHook.transform.position);
         }
     }
 }
