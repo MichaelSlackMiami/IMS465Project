@@ -150,6 +150,8 @@ public class Grapple : MonoBehaviour
 
     private void SwingOnLine()
     {
+        Debug.Log(Time.time);
+
         // Calculate the force that will stabilize the player's movement opposite the hook
         swingForce = -hookDirection * player.velocity.magnitude * Vector2.Dot(hookDirection, player.velocity.normalized);
 
