@@ -22,8 +22,9 @@ public class Grapple : MonoBehaviour
 
     private Vector2 initialDirection;
     private Vector2 hookDirection;
-    private Vector3 grappleLength;
+    private Vector3 grappleVector;
     private Vector2 swingForce;
+    private float currentGrappleLength;
 
     [Header("Player")]
     public Rigidbody2D player;
@@ -43,6 +44,8 @@ public class Grapple : MonoBehaviour
     {
         // Set the debug range indicator's size
         rangeIndicator.transform.localScale *= (2 * maxDistance);
+
+        currentGrappleLength = maxDistance;
     }
 
     void Update()
@@ -96,13 +99,15 @@ public class Grapple : MonoBehaviour
                 }
 
                 // Update the grapple length
-                grappleLength = lineR.GetPosition(0) - lineR.GetPosition(1);
+                grappleVector = lineR.GetPosition(0) - lineR.GetPosition(1);
 
                 // Check if grapple is exceeding its max length
-                if (grappleLength.magnitude > hit.distance)
+                if (grappleVector.magnitude > currentGrappleLength)
                 {
                     SwingOnLine();
                 }
+
+                currentGrappleLength = grappleVector.magnitude;
             }
         }
 
