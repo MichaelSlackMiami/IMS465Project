@@ -34,6 +34,7 @@ public class Grapple : MonoBehaviour
     [Header("Object")]
     private RaycastHit2D hit;
     private float massRatio;
+    bool isFreeBody;
 
     [Header("Debug")]
     public GameObject rangeIndicator;
@@ -68,6 +69,10 @@ public class Grapple : MonoBehaviour
                 myHook = Instantiate(hook, hit.transform, true);
                 myHook.transform.position = hit.point;
                 myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
+
+
+                isFreeBody = hit.rigidbody.constraints == RigidbodyConstraints2D.None;
+
             }
         }
 
@@ -141,10 +146,19 @@ public class Grapple : MonoBehaviour
     {
         swingForce = -hookDirection * player.velocity.magnitude * Vector2.Dot(hookDirection, player.velocity.normalized);
 
-        massRatio = hit.rigidbody.mass / player.mass;
+        
 
-        Debug.Log("Swinging!   " + swingForce.x + ", " + swingForce.y);
-        Debug.Log("Mass Ratio   " + massRatio);
+        if (isFreeBody)
+        {
+            massRatio = hit.rigidbody.mass / player.mass;
+        }
+        else
+        {
+            massRatio = 1;
+        }
+
+
+        Debug.Log(isFreeBody);
 
         player.AddForce(swingForce * massRatio);
 
