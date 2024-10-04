@@ -70,7 +70,7 @@ public class Grapple : MonoBehaviour
                 myHook.transform.position = hit.point;
                 myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
 
-
+                // Check if the hit object is free moving or not (useful later)
                 isFreeBody = hit.rigidbody.constraints == RigidbodyConstraints2D.None;
 
             }
@@ -80,6 +80,7 @@ public class Grapple : MonoBehaviour
         {
             if (myHook)
             {
+                // Get the direction of the line
                 hookDirection = (myHook.transform.position - player.transform.position).normalized;
 
                 // Calculate the grapple force
@@ -144,26 +145,27 @@ public class Grapple : MonoBehaviour
 
     private void SwingOnLine()
     {
+        // Calculate the force that will stabilize the player's movement opposite the hook
         swingForce = -hookDirection * player.velocity.magnitude * Vector2.Dot(hookDirection, player.velocity.normalized);
 
-        
-
-        if (isFreeBody)
+       
+        if (isFreeBody) // Check if the other object will be affected by the swing
         {
+            // Determine the ratio to split the force along
             massRatio = hit.rigidbody.mass / player.mass;
         }
         else
         {
+            // If it is constrained, send all the force to the player
             massRatio = 1;
         }
 
-
-        Debug.Log(isFreeBody);
-
+        // Add the player's swing force
         player.AddForce(swingForce * massRatio);
 
         if (hit)
         {
+            // Add the other object's swing force (constrained objects recieve the full force, but it shouldn't do anything)
             hit.rigidbody.AddForceAtPosition(-swingForce / massRatio, myHook.transform.position);
         }
     }
