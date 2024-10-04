@@ -150,10 +150,10 @@ public class Grapple : MonoBehaviour
 
     private void SwingOnLine()
     {
-        Debug.Log(Time.time);
+        Debug.Log(swingForce);
 
         // Calculate the force that will stabilize the player's movement opposite the hook
-        swingForce = -hookDirection * player.velocity.magnitude * Vector2.Dot(hookDirection, player.velocity.normalized);
+        swingForce = -hookDirection * (player.velocity - hit.rigidbody.velocity).magnitude * Vector2.Dot(hookDirection, player.velocity.normalized);
 
        
         if (isFreeBody) // Check if the other object will be affected by the swing
@@ -168,12 +168,12 @@ public class Grapple : MonoBehaviour
         }
 
         // Add the player's swing force
-        player.AddForce(swingForce * massRatio);
+        player.AddForce(swingForce);
 
         if (hit)
         {
             // Add the other object's swing force (constrained objects recieve the full force, but it shouldn't do anything)
-            hit.rigidbody.AddForceAtPosition(-swingForce / massRatio, myHook.transform.position);
+            hit.rigidbody.AddForceAtPosition(-swingForce, myHook.transform.position);
         }
     }
 }
