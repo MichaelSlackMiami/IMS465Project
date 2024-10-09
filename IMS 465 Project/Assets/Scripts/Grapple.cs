@@ -22,9 +22,9 @@ public class Grapple : MonoBehaviour
 
     private Vector2 initialDirection;
     private Vector2 hookDirection;
-    private Vector3 grappleVector;
     private Vector2 swingForce;
-    private float currentGrappleLength;
+    private Vector2 relativeVelocity;
+    private float velocityAlongHook;
 
     [Header("Player")]
     public Rigidbody2D player;
@@ -44,8 +44,6 @@ public class Grapple : MonoBehaviour
     {
         // Set the debug range indicator's size
         rangeIndicator.transform.localScale *= (2 * maxDistance);
-
-        currentGrappleLength = maxDistance;
     }
 
     void Update()
@@ -92,22 +90,15 @@ public class Grapple : MonoBehaviour
                 // Pull the player
                 player.AddForce(force);
 
-                // Pull the grappled object
+                
                 if (hit)
                 {
+                    // Pull the grappled object
                     hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
-                }
 
-                // Update the grapple length
-                grappleVector = lineR.GetPosition(0) - lineR.GetPosition(1);
-
-                // Check if grapple is exceeding its max length
-                if (grappleVector.magnitude > currentGrappleLength)
-                {
+                    // Balance system for fixed line length
                     SwingOnLine();
                 }
-
-                currentGrappleLength = grappleVector.magnitude;
             }
         }
 
@@ -150,16 +141,23 @@ public class Grapple : MonoBehaviour
 
     private void SwingOnLine()
     {
-        Debug.Log(swingForce);
+        relativeVelocity = player.velocity - hit.rigidbody.velocity;
+        velocityAlongHook = Vector2.Dot(relativeVelocity, hookDirection);
 
-        // Calculate the force that will stabilize the player's movement opposite the hook
-        swingForce = -hookDirection * (player.velocity - hit.rigidbody.velocity).magnitude * Vector2.Dot(hookDirection, player.velocity.normalized);
-
+        // Apply swing force only if the length wants to increase
+        if (velocityAlongHook > 0)
+        {
+            swingForce = -hookDirection * velocityAlongHook;
+        }
+        else
+        {
+            swingForce = Vector2.zero; // No force if not lengthening
+        }
        
         if (isFreeBody) // Check if the other object will be affected by the swing
         {
             // Determine the ratio to split the force along
-            massRatio = hit.rigidbody.mass / player.mass;
+            massRatio = hit.rigidbody.mass / (hit.rigidbody.mass + player.mass);
         }
         else
         {
@@ -168,12 +166,14 @@ public class Grapple : MonoBehaviour
         }
 
         // Add the player's swing force
-        player.AddForce(swingForce);
+        player.AddForce(swingForce * massRatio);
 
-        if (hit)
+        Debug.Log(swingForce.magnitude);
+
+        if (hit && isFreeBody)
         {
             // Add the other object's swing force (constrained objects recieve the full force, but it shouldn't do anything)
-            hit.rigidbody.AddForceAtPosition(-swingForce, myHook.transform.position);
+            hit.rigidbody.AddForceAtPosition(-swingForce * (1 - massRatio), myHook.transform.position);
         }
     }
 }
