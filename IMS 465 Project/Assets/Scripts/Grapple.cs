@@ -22,6 +22,7 @@ public class Grapple : MonoBehaviour
 
     private Vector3 grappleVector;
     private float currentGrappleLength;
+    private float currentRaycastLength;
 
 
     [Header("Physics")]
@@ -69,24 +70,11 @@ public class Grapple : MonoBehaviour
             mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             initialDirection = (mouse - playerPosition).normalized;
 
-            // Generate collision
-            hit = Physics2D.Raycast(transform.position, initialDirection, maxDistance);
-
             // Reinstate Line Renderer and set start to Player
             lineOut = true;
             lineR.positionCount = 2;
 
-            if (hit.collider) // if grappling hook hit something
-            {
-                // Create hook prefab at collision as child of object
-                myHook = Instantiate(hook, hit.transform, true);
-                myHook.transform.position = hit.point;
-                myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
-
-                // Check if the hit object is free moving or not (useful later)
-                isFreeBody = hit.rigidbody.constraints == RigidbodyConstraints2D.None;
-
-            }
+            StartCoroutine(SendOutHook(0.1f));
         }
 
         if (Input.GetMouseButton(0)) // Left click held
@@ -142,6 +130,42 @@ public class Grapple : MonoBehaviour
         }
     }
 
+    IEnumerator SendOutHook(float seconds)
+    {
+        currentRaycastLength = 0;
+
+        while (myHook == null && Input.GetMouseButton(0) && currentRaycastLength < maxDistance)
+        {
+            currentRaycastLength += (Time.deltaTime * maxDistance / seconds);
+            if (currentRaycastLength > maxDistance)
+            {
+                currentRaycastLength = maxDistance;
+            }
+
+            ShootHook(currentRaycastLength);
+
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private void ShootHook(float distance)
+    {
+        // Generate collision
+        hit = Physics2D.Raycast(transform.position, initialDirection, distance);
+
+        if (hit.collider) // if grappling hook hit something
+        {
+            // Create hook prefab at collision as child of object
+            myHook = Instantiate(hook, hit.transform, true);
+            myHook.transform.position = hit.point;
+            myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
+
+            // Check if the hit object is free moving or not (useful later)
+            isFreeBody = hit.rigidbody.constraints == RigidbodyConstraints2D.None;
+
+        }
+    }
+
     private void UpdateLine()
     {
         // Anchor the first point on the player
@@ -155,7 +179,7 @@ public class Grapple : MonoBehaviour
         else
         {
             // Set the second point to the missed location
-            lineR.SetPosition(1, playerPosition + (initialDirection * maxDistance));
+            lineR.SetPosition(1, playerPosition + (initialDirection * currentRaycastLength));
         }
     }
 
