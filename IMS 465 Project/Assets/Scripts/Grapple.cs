@@ -20,11 +20,22 @@ public class Grapple : MonoBehaviour
     public LineRenderer lineR;
     public bool lineOut;
 
+    private Vector3 grappleVector;
+    private float currentGrappleLength;
+
+
+    [Header("Physics")]
     private Vector2 initialDirection;
     private Vector2 hookDirection;
     private Vector2 swingForce;
     private Vector2 relativeVelocity;
     private float velocityAlongHook;
+    private Vector2 radius;
+    private float angularVelocityRad;
+    private Vector2 rotationalVelocity;
+    private Vector2 hookVelocity;
+    private float systemMass;
+
 
     [Header("Player")]
     public Rigidbody2D player;
@@ -34,7 +45,6 @@ public class Grapple : MonoBehaviour
 
     [Header("Object")]
     private RaycastHit2D hit;
-    private float massRatio;
     bool isFreeBody;
 
     [Header("Debug")]
@@ -44,6 +54,8 @@ public class Grapple : MonoBehaviour
     {
         // Set the debug range indicator's size
         rangeIndicator.transform.localScale *= (2 * maxDistance);
+
+        currentGrappleLength = maxDistance;
     }
 
     void Update()
@@ -96,8 +108,16 @@ public class Grapple : MonoBehaviour
                     // Pull the grappled object
                     hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
 
-                    // Balance system for fixed line length
-                    SwingOnLine();
+                    // Update the grapple length
+                    grappleVector = lineR.GetPosition(0) - lineR.GetPosition(1);
+
+                    // Check if grapple is exceeding its max length
+                    if (grappleVector.magnitude > currentGrappleLength)
+                    {
+                        SwingOnLine();
+                    }
+
+                    currentGrappleLength = grappleVector.magnitude;
                 }
             }
         }
@@ -141,39 +161,41 @@ public class Grapple : MonoBehaviour
 
     private void SwingOnLine()
     {
-        relativeVelocity = player.velocity - hit.rigidbody.velocity;
+        // Find the velocity (rotational) of the hook relative the center of the hit object
+        radius = myHook.transform.position - hit.transform.position;
+        angularVelocityRad = hit.rigidbody.angularVelocity * Mathf.Deg2Rad;
+        rotationalVelocity = new Vector2(-radius.y, radius.x) * angularVelocityRad;
+
+        // Get the hook's total velocity by add its relative velocity to the object's velocity
+        hookVelocity = hit.rigidbody.velocity + rotationalVelocity;
+
+        // Calculate the velocity along the line (lengthening/shortening speed)
+        relativeVelocity = player.velocity - hookVelocity;
         velocityAlongHook = Vector2.Dot(relativeVelocity, hookDirection);
 
-        // Apply swing force only if the length wants to increase
-        if (velocityAlongHook > 0)
-        {
-            swingForce = -hookDirection * velocityAlongHook;
-        }
-        else
-        {
-            swingForce = Vector2.zero; // No force if not lengthening
-        }
-       
+        // To counter lengthening, we need the opposite of that velocity
+        swingForce = -hookDirection * velocityAlongHook;
+
         if (isFreeBody) // Check if the other object will be affected by the swing
         {
-            // Determine the ratio to split the force along
-            massRatio = hit.rigidbody.mass / (hit.rigidbody.mass + player.mass);
+            // Get the mass of the system (The more inertia of the system, the more force needed to balance it)
+            systemMass = (hit.rigidbody.mass + player.mass);
         }
         else
         {
-            // If it is constrained, send all the force to the player
-            massRatio = 1;
+            // Just get the player if the object is stationary
+            systemMass = player.mass;
         }
 
-        // Add the player's swing force
-        player.AddForce(swingForce * massRatio);
+        swingForce *= systemMass;
 
-        Debug.Log(swingForce.magnitude);
+        // Add the swing force
+        player.AddForce(swingForce);
 
-        if (hit && isFreeBody)
+        if (hit && isFreeBody) // Check if should add force to object
         {
-            // Add the other object's swing force (constrained objects recieve the full force, but it shouldn't do anything)
-            hit.rigidbody.AddForceAtPosition(-swingForce * (1 - massRatio), myHook.transform.position);
+            // Add the swing force
+            hit.rigidbody.AddForceAtPosition(-swingForce, myHook.transform.position);
         }
     }
 }
