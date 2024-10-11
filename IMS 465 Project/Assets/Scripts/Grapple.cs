@@ -26,6 +26,8 @@ public class Grapple : MonoBehaviour
     private Vector3 grappleVector;
     private float currentGrappleLength;
     private float currentRaycastLength;
+    private Coroutine sendingOut;
+    private Coroutine bringingBack;
 
 
     [Header("Physics")]
@@ -78,7 +80,9 @@ public class Grapple : MonoBehaviour
             lineOut = true;
             lineR.positionCount = 2;
 
-            StartCoroutine(SendOutHook(timeToExtend));
+            if (bringingBack != null)
+                StopCoroutine(bringingBack);
+            sendingOut = StartCoroutine(SendOutHook(timeToExtend));
         }
 
         if (Input.GetMouseButton(0)) // Left click held
@@ -124,9 +128,15 @@ public class Grapple : MonoBehaviour
                 Destroy(myHook);
             }
 
+            // Retract line
             if (lineOut)
             {
-                StartCoroutine(BringBackHook(timeToRetract));
+                // Cancel sending
+                if (sendingOut != null)
+                    StopCoroutine(sendingOut);
+
+                // Start bringing back
+                bringingBack = StartCoroutine(BringBackHook(timeToRetract));
             }
         }
 
@@ -138,25 +148,34 @@ public class Grapple : MonoBehaviour
 
     IEnumerator SendOutHook(float seconds)
     {
+        // Set the line length to 0
         currentRaycastLength = 0;
 
         while (myHook == null && Input.GetMouseButton(0) && currentRaycastLength < maxDistance)
         {
+            // Slowly increase length
             currentRaycastLength += (Time.deltaTime * maxDistance / seconds);
             if (currentRaycastLength > maxDistance)
             {
                 currentRaycastLength = maxDistance;
             }
 
+            // Send out hook based on this length
             ShootHook(currentRaycastLength);
 
             yield return new WaitForEndOfFrame();
         }
 
+        // Wait to avoid instant out and back
         yield return new WaitForSeconds(waitTime);
 
-        ShootHook(currentRaycastLength);
+        // Check if hit during wait time
+        if (myHook == null)
+        {
+            ShootHook(currentRaycastLength);
+        }
 
+        // If no hit, bring back hook
         if (currentRaycastLength == maxDistance && myHook == null)
         {
             StartCoroutine(BringBackHook(timeToRetract));
@@ -165,7 +184,8 @@ public class Grapple : MonoBehaviour
 
     IEnumerator BringBackHook(float seconds)
     {
-        while (currentRaycastLength > 0)
+        // Incrementally decrease length
+        while (currentRaycastLength > 0 && !Input.GetMouseButtonDown(0))
         {
             currentRaycastLength -= (Time.deltaTime * maxDistance / seconds);
             if (currentRaycastLength < 0)
