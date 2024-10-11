@@ -9,6 +9,7 @@ public class Grapple : MonoBehaviour
     public float pullStrength;
     public float timeToExtend;
     public float timeToRetract;
+    public float waitTime;
 
     private Vector2 force;
 
@@ -123,7 +124,10 @@ public class Grapple : MonoBehaviour
                 Destroy(myHook);
             }
 
-            StartCoroutine(BringBackHook(timeToRetract));
+            if (lineOut)
+            {
+                StartCoroutine(BringBackHook(timeToRetract));
+            }
         }
 
         if (lineOut)
@@ -147,6 +151,15 @@ public class Grapple : MonoBehaviour
             ShootHook(currentRaycastLength);
 
             yield return new WaitForEndOfFrame();
+        }
+
+        yield return new WaitForSeconds(waitTime);
+
+        ShootHook(currentRaycastLength);
+
+        if (currentRaycastLength == maxDistance && myHook == null)
+        {
+            StartCoroutine(BringBackHook(timeToRetract));
         }
     }
 
@@ -175,6 +188,12 @@ public class Grapple : MonoBehaviour
 
         if (hit.collider) // if grappling hook hit something
         {
+            // Make sure previous hook gets destroyed
+            if (myHook)
+            {
+                Destroy(myHook);
+            }
+
             // Create hook prefab at collision as child of object
             myHook = Instantiate(hook, hit.transform, true);
             myHook.transform.position = hit.point;
@@ -182,7 +201,6 @@ public class Grapple : MonoBehaviour
 
             // Check if the hit object is free moving or not (useful later)
             isFreeBody = hit.rigidbody.constraints == RigidbodyConstraints2D.None;
-
         }
     }
 
