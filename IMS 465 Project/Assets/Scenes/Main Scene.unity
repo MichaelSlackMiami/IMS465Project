@@ -607,6 +607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDistance: 7
   pullStrength: 200
+  timeToExtend: 0.1
+  timeToRetract: 0.2
   hook: {fileID: 8629033383342186479, guid: 4460a72211845e648bace613b3705a0e, type: 3}
   lineR: {fileID: 681757964}
   lineOut: 0

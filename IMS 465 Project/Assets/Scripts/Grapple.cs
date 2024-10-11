@@ -7,6 +7,8 @@ public class Grapple : MonoBehaviour
     [Header("Grapple Properties")]
     public float maxDistance;
     public float pullStrength;
+    public float timeToExtend;
+    public float timeToRetract;
 
     private Vector2 force;
 
@@ -40,13 +42,14 @@ public class Grapple : MonoBehaviour
 
     [Header("Player")]
     public Rigidbody2D player;
+
     private Vector2 playerPosition;
     private Vector2 mouse;
 
 
     [Header("Object")]
     private RaycastHit2D hit;
-    bool isFreeBody;
+    private bool isFreeBody;
 
     [Header("Debug")]
     public GameObject rangeIndicator;
@@ -74,7 +77,7 @@ public class Grapple : MonoBehaviour
             lineOut = true;
             lineR.positionCount = 2;
 
-            StartCoroutine(SendOutHook(0.1f));
+            StartCoroutine(SendOutHook(timeToExtend));
         }
 
         if (Input.GetMouseButton(0)) // Left click held
@@ -106,6 +109,7 @@ public class Grapple : MonoBehaviour
                     }
 
                     currentGrappleLength = grappleVector.magnitude;
+                    initialDirection = hookDirection;
                 }
             }
         }
@@ -119,9 +123,7 @@ public class Grapple : MonoBehaviour
                 Destroy(myHook);
             }
 
-            // Destroy  line
-            lineOut = false;
-            lineR.positionCount = 0;
+            StartCoroutine(BringBackHook(timeToRetract));
         }
 
         if (lineOut)
@@ -146,6 +148,24 @@ public class Grapple : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    IEnumerator BringBackHook(float seconds)
+    {
+        while (currentRaycastLength > 0)
+        {
+            currentRaycastLength -= (Time.deltaTime * maxDistance / seconds);
+            if (currentRaycastLength < 0)
+            {
+                currentRaycastLength = 0;
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        // Destroy  line
+        lineOut = false;
+        lineR.positionCount = 0;
     }
 
     private void ShootHook(float distance)
