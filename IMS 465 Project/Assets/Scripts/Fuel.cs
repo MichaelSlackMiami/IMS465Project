@@ -23,6 +23,12 @@ public class Fuel : MonoBehaviour
         {
             // ... Trigger victory sequence
             Debug.Log("You win!");
+
+            // Destroy self for visual feedback
+            Destroy(gameObject);
+
+            // Pause game to stop player momentum
+            Time.timeScale = 0;
         }
     }
 }
