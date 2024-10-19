@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Death : MonoBehaviour
 {
+    public bool killEverything = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,7 @@ public class Death : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // If the player collides with this object...
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || killEverything)
         {
             // ... Kill the player
             Destroy(collision.gameObject);
