@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Fuel : MonoBehaviour
 {
+    [SerializeField] private GameManager GameManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -21,14 +22,11 @@ public class Fuel : MonoBehaviour
         // When the Player collides with this object...
         if (collision.gameObject.CompareTag("Player"))
         {
-            // ... Trigger victory sequence
-            Debug.Log("You win!");
+            // ... Alert the Game Manager that the player has won
+            GameManager.LevelClear();
 
             // Destroy self for visual feedback
             Destroy(gameObject);
-
-            // Pause game to stop player momentum
-            Time.timeScale = 0;
         }
     }
 }

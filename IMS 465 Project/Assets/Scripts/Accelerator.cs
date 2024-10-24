@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Speed : MonoBehaviour
+public class Accelerator : MonoBehaviour
 {
+    [SerializeField] private float force;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,7 @@ public class Speed : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.attachedRigidbody.velocity = new Vector2(0, 7);
+        // Propel object
+        collision.attachedRigidbody.AddForce(transform.up * force);
     }
 }

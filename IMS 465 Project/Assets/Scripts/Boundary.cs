@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Boundary : MonoBehaviour
 {
+    [SerializeField] private GameManager GameManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class Boundary : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Player>().DeathSequence();
+            GameManager.GameOver("OutOfBounds");
         }
     }
 }
