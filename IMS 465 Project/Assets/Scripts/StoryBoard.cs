@@ -19,7 +19,7 @@ public class StoryBoard : MonoBehaviour
         {
             slide.SetActive(true);
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
 
             slide.SetActive(false);
         }
