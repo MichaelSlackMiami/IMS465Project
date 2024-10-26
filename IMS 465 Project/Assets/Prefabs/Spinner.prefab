@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2109786528344233675}
   - component: {fileID: 8252609221162482772}
   - component: {fileID: 8024412744860928334}
+  - component: {fileID: 1889039016023038345}
   m_Layer: 0
   m_Name: Spinner
   m_TagString: Untagged
@@ -162,3 +163,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRB: {fileID: 8252609221162482772}
+--- !u!114 &1889039016023038345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542271349292536036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf3446544af2134999d4729379c4caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terminalImpactThreshold: 4
+  GameManager: {fileID: 0}

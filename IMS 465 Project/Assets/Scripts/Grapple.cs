@@ -10,6 +10,7 @@ public class Grapple : MonoBehaviour
     public float timeToExtend;
     public float timeToRetract;
     public float waitTime;
+    public bool grappleDisabled = false;
 
     private Vector2 force;
 
@@ -69,52 +70,54 @@ public class Grapple : MonoBehaviour
     {
         // Convert position to 2d
         playerPosition = transform.position;
-
-        if (Input.GetMouseButtonDown(0)) // left click
+        if (!grappleDisabled)
         {
-            // Get mouse position and direction from Player
-            mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            initialDirection = (mouse - playerPosition).normalized;
-
-            // Reinstate Line Renderer and set start to Player
-            lineOut = true;
-            lineR.positionCount = 2;
-
-            if (bringingBack != null)
-                StopCoroutine(bringingBack);
-            sendingOut = StartCoroutine(SendOutHook(timeToExtend));
-        }
-
-        if (Input.GetMouseButton(0)) // Left click held
-        {
-            if (myHook)
+            if (Input.GetMouseButtonDown(0)) // left click
             {
-                // Get the direction of the line
-                hookDirection = (myHook.transform.position - player.transform.position).normalized;
+                // Get mouse position and direction from Player
+                mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                initialDirection = (mouse - playerPosition).normalized;
 
-                // Calculate the grapple force
-                force =  hookDirection * pullStrength * Time.deltaTime;
+                // Reinstate Line Renderer and set start to Player
+                lineOut = true;
+                lineR.positionCount = 2;
 
-                // Pull the player
-                player.AddForce(force);
+                if (bringingBack != null)
+                    StopCoroutine(bringingBack);
+                sendingOut = StartCoroutine(SendOutHook(timeToExtend));
+            }
 
-                
-                if (hit)
+            if (Input.GetMouseButton(0)) // Left click held
+            {
+                if (myHook)
                 {
-                    // Pull the grappled object
-                    hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
+                    // Get the direction of the line
+                    hookDirection = (myHook.transform.position - player.transform.position).normalized;
 
-                    // Update the grapple length
-                    grappleVector = lineR.GetPosition(0) - lineR.GetPosition(1);
+                    // Calculate the grapple force
+                    force = hookDirection * pullStrength * Time.deltaTime;
 
-                    // Check if grapple is exceeding its max length
-                    if (grappleVector.magnitude > currentGrappleLength)
+                    // Pull the player
+                    player.AddForce(force);
+
+
+                    if (hit)
                     {
-                        SwingOnLine();
-                    }
+                        // Pull the grappled object
+                        hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
 
-                    currentGrappleLength = grappleVector.magnitude;
-                    initialDirection = hookDirection;
+                        // Update the grapple length
+                        grappleVector = lineR.GetPosition(0) - lineR.GetPosition(1);
+
+                        // Check if grapple is exceeding its max length
+                        if (grappleVector.magnitude > currentGrappleLength)
+                        {
+                            SwingOnLine();
+                        }
+
+                        currentGrappleLength = grappleVector.magnitude;
+                        initialDirection = hookDirection;
+                    }
                 }
             }
         }
