@@ -121,20 +121,22 @@ public class GameManager : MonoBehaviour
         // Valid source list: OutOfBounds, Impact, BlackHole
         if (source == "OutOfBounds")
         {
-            Destroy(player);
+            
         } else if (source == "Impact")
         {
             Destroy(player);
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         } else if (source == "BlackHole")
         {
             Destroy(player);
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         } else
         {
             Destroy(player);
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         }
         // Regardless of how the player lost, do the following
         cam.followPlayer = false;
-        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         StartCoroutine(DisplayText("GameOver"));
     }
 }
