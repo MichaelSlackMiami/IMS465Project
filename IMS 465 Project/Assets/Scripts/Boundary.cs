@@ -12,7 +12,7 @@ public class Boundary : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -26,11 +26,13 @@ public class Boundary : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameManager.GameOver("OutOfBounds");
+            Debug.Log("Out of bounds");
         }
     }
 
     private void OnLevelWasLoaded(int level)
     {
+        // Create Out of Bounds zone
         myOOB = Instantiate(OutOfBounds);
         myOOB.transform.position = transform.position;
         myOOB.transform.localScale = (transform.lossyScale * 2);
