@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 594650236488880387}
   - component: {fileID: 933267357509665633}
   - component: {fileID: 9093329653023833885}
+  - component: {fileID: 7959966629590713594}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -99,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  grapple: {fileID: 0}
   cam: {fileID: 0}
   LevelClearDisplay1: {fileID: 0}
   LevelClearDisplay2: {fileID: 0}
@@ -200,3 +202,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7959966629590713594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3512990568608126395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bdd37e69ee21e543b5ea79aecc9ea98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  world_1: 01000000000000000000000000000000000000000000000000000000000000000000000000000000
+  world_2: 01000000000000000000000000000000000000000000000000000000000000000000000000000000
+  world_3: 01000000000000000000000000000000000000000000000000000000000000000000000000000000
