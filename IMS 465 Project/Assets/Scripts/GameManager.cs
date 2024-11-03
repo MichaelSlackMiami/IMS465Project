@@ -22,10 +22,19 @@ public class GameManager : MonoBehaviour
     [Header("Pause")]
     [SerializeField] private GameObject PauseDisplay;
 
-    // Start is called before the first frame update
-    void Start()
+    private static GameManager instance;
+
+    void Awake()
     {
-        DontDestroyOnLoad(gameObject);  // Makes it a permanent instance
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnLevelWasLoaded(int level)
