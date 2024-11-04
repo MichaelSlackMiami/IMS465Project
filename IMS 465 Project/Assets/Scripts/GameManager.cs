@@ -103,6 +103,8 @@ public class GameManager : MonoBehaviour
         grapple.grappleDisabled = true;
         gameObject.GetComponent<AudioSource>().Play();
         StartCoroutine(DisplayText("LevelClear"));
+
+        gameObject.GetComponent<ProgressTracker>().LevelClear();
     }
 
     private IEnumerator DisplayText(string content)

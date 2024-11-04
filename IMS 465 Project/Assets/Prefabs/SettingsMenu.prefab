@@ -706,6 +706,7 @@ GameObject:
   - component: {fileID: 3547176378595487638}
   - component: {fileID: 854808484658554651}
   - component: {fileID: 5664184745587120094}
+  - component: {fileID: 4806710374398238137}
   m_Layer: 5
   m_Name: DevTools
   m_TagString: Untagged
@@ -831,6 +832,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4806710374398238137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3669027712993107348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe40c43c9478b804799b70da3ca597b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4679064966395099795
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,7 +964,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2517530045963842810}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4806710374398238137}
+        m_TargetAssemblyTypeName: DevTools, Assembly-CSharp
+        m_MethodName: UnlockAll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5246685789211273794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,7 +1305,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3734128416100674903}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4806710374398238137}
+        m_TargetAssemblyTypeName: DevTools, Assembly-CSharp
+        m_MethodName: ResetProgress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5984483319151275849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,7 +1682,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5414872112436518629
 RectTransform:
   m_ObjectHideFlags: 0
