@@ -74,26 +74,28 @@ public class GameManager : MonoBehaviour
         }
 
         // If the level has been cleared...
-        if (LevelClearDisplay2.activeInHierarchy)
-        {
-            // ... If the player left clicks...
-            if (Input.GetMouseButtonDown(0))
+        if (LevelClearDisplay1)
+            if (LevelClearDisplay2.activeInHierarchy)
             {
-                // ... Load the World Select menu
-                SceneManager.LoadScene("WorldSelect");
+                // ... If the player left clicks...
+                if (Input.GetMouseButtonDown(0))
+                {
+                    // ... Load the World Select menu
+                    SceneManager.LoadScene("WorldSelect");
+                }
             }
-        }
 
         // If the player lost...
-        if (GameOverDisplay.activeInHierarchy)
-        {
-            // ... If the player left clicks...
-            if (Input.GetMouseButtonDown(0))
+        if (GameOverDisplay)
+            if (GameOverDisplay.activeInHierarchy)
             {
-                // ... Reload the current level
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                // ... If the player left clicks...
+                if (Input.GetMouseButtonDown(0))
+                {
+                    // ... Reload the current level
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
             }
-        }
     }
     public void LevelClear()
     {
