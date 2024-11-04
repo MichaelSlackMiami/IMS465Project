@@ -2359,6 +2359,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997239662}
   m_CullTransparentMesh: 1
+--- !u!1 &1001816320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1001816322}
+  - component: {fileID: 1001816321}
+  m_Layer: 0
+  m_Name: LevelUnlocker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1001816321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001816320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0951e635b183c62428e9eee2c324d6ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldIndex: 3
+  levels:
+  - {fileID: 1193522482}
+  - {fileID: 304909358}
+  - {fileID: 477111648}
+  - {fileID: 1911549128}
+  - {fileID: 524218149}
+  - {fileID: 1961902818}
+  - {fileID: 1562390068}
+  - {fileID: 54820007}
+  - {fileID: 932499024}
+  - {fileID: 997239664}
+--- !u!4 &1001816322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001816320}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.106458776, y: 0.8693984, z: -0.13147616}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1148616486
 GameObject:
   m_ObjectHideFlags: 0
@@ -4439,3 +4495,4 @@ SceneRoots:
   - {fileID: 1736768108}
   - {fileID: 1842848472}
   - {fileID: 1610191451}
+  - {fileID: 1001816322}
