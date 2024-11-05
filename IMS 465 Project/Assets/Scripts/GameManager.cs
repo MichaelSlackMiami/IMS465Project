@@ -103,10 +103,9 @@ public class GameManager : MonoBehaviour
         cam.followPlayer = false;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         grapple.grappleDisabled = true;
+        gameObject.GetComponent<ProgressTracker>().LevelClear();
         gameObject.GetComponent<AudioSource>().Play();
         StartCoroutine(DisplayText("LevelClear"));
-
-        gameObject.GetComponent<ProgressTracker>().LevelClear();
     }
 
     private IEnumerator DisplayText(string content)

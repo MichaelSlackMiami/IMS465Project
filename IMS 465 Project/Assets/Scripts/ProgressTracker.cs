@@ -60,7 +60,23 @@ public class ProgressTracker : MonoBehaviour
         LevelData ld = GameObject.Find("LevelData").GetComponent<LevelData>();
 
         if (ld != null)
-            PlayerPrefs.SetInt("world_" + ld.worldIndex + "_" + ld.levelIndex, 1);
+            switch (ld.worldIndex)
+            {
+                case 1:
+                    if (ld.levelIndex + 1 < world_1.Length)
+                        world_1[ld.levelIndex + 1] = 1;
+                    break;
+                case 2:
+                    if (ld.levelIndex + 1 < world_2.Length)
+                        world_2[ld.levelIndex + 1] = 1;
+                    break;
+                case 3:
+                    if (ld.levelIndex + 1 < world_3.Length)
+                        world_3[ld.levelIndex + 1] = 1;
+                    break;
+                default:
+                    break;
+            }
 
         Save();
     }
