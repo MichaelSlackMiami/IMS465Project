@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,14 +23,25 @@ public class GameManager : MonoBehaviour
     [Header("Pause")]
     [SerializeField] private GameObject PauseDisplay;
 
+    [Header("Music")]
+    [SerializeField] private AudioClip[] track;
+    private AudioSource myAudio;
+
     private static GameManager instance;
 
     void Awake()
     {
+        // If a GameManager does not already exist...
         if (instance == null)
         {
+            // ... Perform GameManager functions
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // ... Establish audio control
+            myAudio = gameObject.GetComponent<AudioSource>();
+            myAudio.clip = track[4];
+            myAudio.Play();
         }
         else if (instance != this)
         {
@@ -39,18 +51,47 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        // Identify necessary elements in scene
-        player = GameObject.Find("Player");
-        grapple = GameObject.Find("Grapple").GetComponent<Grapple>();
-        cam = GameObject.Find("Main Camera").GetComponent<Cam>();
-        LevelClearDisplay1 = GameObject.Find("LevelClearDisplay1");
-        LevelClearDisplay1.SetActive(false);
-        LevelClearDisplay2 = GameObject.Find("LevelClearDisplay2");
-        LevelClearDisplay2.SetActive(false);
-        GameOverDisplay = GameObject.Find("GameOverDisplay");
-        GameOverDisplay.SetActive(false);
-        PauseDisplay = GameObject.Find("PauseDisplay");
-        PauseDisplay.SetActive(false);
+        if (level != 0 && level != 1 && level != 2 && level != 3)
+        {
+            // Identify necessary elements in scene
+            player = GameObject.Find("Player");
+            grapple = GameObject.Find("Grapple").GetComponent<Grapple>();
+            cam = GameObject.Find("Main Camera").GetComponent<Cam>();
+            LevelClearDisplay1 = GameObject.Find("LevelClearDisplay1");
+            LevelClearDisplay1.SetActive(false);
+            LevelClearDisplay2 = GameObject.Find("LevelClearDisplay2");
+            LevelClearDisplay2.SetActive(false);
+            GameOverDisplay = GameObject.Find("GameOverDisplay");
+            GameOverDisplay.SetActive(false);
+            PauseDisplay = GameObject.Find("PauseDisplay");
+            PauseDisplay.SetActive(false);
+        }
+
+        if (level == 1)
+        {
+            // Intro scene
+            myAudio.Stop();
+        } else if (level == 2)
+        {
+            // World select
+            if (myAudio.clip != track[0])
+            {
+                // "A Good Day to be Stuck in Space"
+                myAudio.Stop();
+                myAudio.clip = track[0];
+                myAudio.Play();
+            }
+        } else if (level == 4 || level == 5 || level == 6)
+        {
+            // In a World 1 level
+            if (myAudio.clip != track[1])
+            {
+                // "An Unstoppable Force"
+                myAudio.Stop();
+                myAudio.clip = track[1];
+                myAudio.Play();
+            }
+        }
     }
 
     // Update is called once per frame
@@ -64,11 +105,13 @@ public class GameManager : MonoBehaviour
             {
                 PauseDisplay.SetActive(false);
                 paused = false;
+                myAudio.UnPause();
                 Time.timeScale = 1;
             } else
             {
                 PauseDisplay.SetActive(true);
                 paused = true;
+                myAudio.Pause();
                 Time.timeScale = 0;
             }
         }
@@ -104,7 +147,9 @@ public class GameManager : MonoBehaviour
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         grapple.grappleDisabled = true;
         gameObject.GetComponent<ProgressTracker>().LevelClear();
-        gameObject.GetComponent<AudioSource>().Play();
+        myAudio.Stop();
+        myAudio.clip = track[7];
+        myAudio.Play();
         StartCoroutine(DisplayText("LevelClear"));
     }
 
