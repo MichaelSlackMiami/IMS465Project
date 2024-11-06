@@ -24,8 +24,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject PauseDisplay;
 
     [Header("Music")]
-    [SerializeField] private AudioClip[] track;
-    private AudioSource myAudio;
+    [SerializeField] private AudioClip[] tracks;
+    [SerializeField] private AudioSource primaryMusic;
+    [SerializeField] private AudioSource secondaryMusic;
+    [SerializeField] private AudioSource nonLoopingMusic;
 
     private static GameManager instance;
 
@@ -38,10 +40,9 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // ... Establish audio control
-            myAudio = gameObject.GetComponent<AudioSource>();
-            myAudio.clip = track[4];
-            myAudio.Play();
+            // ... Start music
+            primaryMusic.clip = tracks[4];
+            primaryMusic.Play();
         }
         else if (instance != this)
         {
@@ -70,26 +71,26 @@ public class GameManager : MonoBehaviour
         if (level == 1)
         {
             // Intro scene
-            myAudio.Stop();
+            primaryMusic.Stop();
         } else if (level == 2)
         {
             // World select
-            if (myAudio.clip != track[0])
+            if (primaryMusic.clip != tracks[0])
             {
                 // "A Good Day to be Stuck in Space"
-                myAudio.Stop();
-                myAudio.clip = track[0];
-                myAudio.Play();
+                primaryMusic.Stop();
+                primaryMusic.clip = tracks[0];
+                primaryMusic.Play();
             }
         } else if (level == 4 || level == 5 || level == 6)
         {
             // In a World 1 level
-            if (myAudio.clip != track[1])
+            if (primaryMusic.clip != tracks[1])
             {
                 // "An Unstoppable Force"
-                myAudio.Stop();
-                myAudio.clip = track[1];
-                myAudio.Play();
+                primaryMusic.Stop();
+                primaryMusic.clip = tracks[1];
+                primaryMusic.Play();
             }
         }
     }
@@ -105,13 +106,16 @@ public class GameManager : MonoBehaviour
             {
                 PauseDisplay.SetActive(false);
                 paused = false;
-                myAudio.UnPause();
+                secondaryMusic.Stop();
+                primaryMusic.UnPause();
                 Time.timeScale = 1;
             } else
             {
                 PauseDisplay.SetActive(true);
                 paused = true;
-                myAudio.Pause();
+                primaryMusic.Pause();
+                secondaryMusic.clip = tracks[2];
+                secondaryMusic.Play();
                 Time.timeScale = 0;
             }
         }
@@ -147,9 +151,9 @@ public class GameManager : MonoBehaviour
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         grapple.grappleDisabled = true;
         gameObject.GetComponent<ProgressTracker>().LevelClear();
-        myAudio.Stop();
-        myAudio.clip = track[7];
-        myAudio.Play();
+        primaryMusic.Stop();
+        nonLoopingMusic.clip = tracks[6];
+        nonLoopingMusic.Play();
         StartCoroutine(DisplayText("LevelClear"));
     }
 

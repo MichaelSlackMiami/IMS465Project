@@ -55,6 +55,10 @@ public class Grapple : MonoBehaviour
     private RaycastHit2D hit;
     private bool isFreeBody;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource GrappleFire;
+    [SerializeField] private AudioSource GrappleConnect;
+
     [Header("Debug")]
     public GameObject rangeIndicator;
 
@@ -81,6 +85,9 @@ public class Grapple : MonoBehaviour
                 // Reinstate Line Renderer and set start to Player
                 lineOut = true;
                 lineR.positionCount = 2;
+
+                // Play SFX
+                GrappleFire.Play();
 
                 if (bringingBack != null)
                     StopCoroutine(bringingBack);
@@ -221,6 +228,9 @@ public class Grapple : MonoBehaviour
             myHook = Instantiate(hook, hit.transform, true);
             myHook.transform.position = hit.point;
             myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
+
+            // Play SFX
+            GrappleConnect.Play();
 
             // Check if the hit object is free moving or not (useful later)
             isFreeBody = hit.rigidbody.constraints == RigidbodyConstraints2D.None;
