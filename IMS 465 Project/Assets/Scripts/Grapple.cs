@@ -283,4 +283,12 @@ public class Grapple : MonoBehaviour
             hit.rigidbody.AddForceAtPosition(-swingForce, myHook.transform.position);
         }
     }
+
+    private void OnDisable()
+    {
+        if (myHook)
+        {
+            Destroy(myHook);
+        }
+    }
 }
