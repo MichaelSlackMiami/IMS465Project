@@ -153,6 +153,9 @@ public class Grapple : MonoBehaviour
                 // Start bringing back
                 bringingBack = StartCoroutine(BringBackHook(timeToRetract));
             }
+
+            force = Vector2.zero;
+            swingForce = Vector2.zero;
         }
 
         if (lineOut)
