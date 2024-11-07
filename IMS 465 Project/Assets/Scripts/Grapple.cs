@@ -140,6 +140,10 @@ public class Grapple : MonoBehaviour
             // Destroy hook
             if (myHook)
             {
+                // Update variables for bringing back line
+                initialDirection = (myHook.transform.position - (Vector3)playerPosition).normalized;
+                currentRaycastLength = (myHook.transform.position - (Vector3)playerPosition).magnitude;
+
                 Destroy(myHook);
             }
 
