@@ -244,7 +244,8 @@ public class Grapple : MonoBehaviour
             // Create hook prefab at collision as child of object
             myHook = Instantiate(hook, hit.transform, true);
             myHook.transform.position = hit.point;
-            myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
+            //myHook.transform.localRotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, hit.normal));
+            myHook.transform.up = hit.normal;
 
             // Play SFX
             GrappleConnect.Play();
