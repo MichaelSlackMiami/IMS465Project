@@ -18,7 +18,7 @@ public class Grapple : MonoBehaviour
     public GameObject hook;
 
     private GameObject myHook;
-
+    private GameObject unhitHook;
 
     [Header("Line")]
     public LineRenderer lineR;
@@ -85,6 +85,11 @@ public class Grapple : MonoBehaviour
                 // Reinstate Line Renderer and set start to Player
                 lineOut = true;
                 lineR.positionCount = 2;
+
+                // Create a hook for end of line
+                if (unhitHook)
+                    Destroy(unhitHook);
+                unhitHook = Instantiate(hook);
 
                 // Play SFX
                 GrappleFire.Play();
@@ -209,6 +214,12 @@ public class Grapple : MonoBehaviour
         // Destroy  line
         lineOut = false;
         lineR.positionCount = 0;
+
+        // Destroy hook on end of line
+        if (unhitHook)
+        {
+            Destroy(unhitHook);
+        }
     }
 
     private void ShootHook(float distance)
@@ -222,6 +233,12 @@ public class Grapple : MonoBehaviour
             if (myHook)
             {
                 Destroy(myHook);
+            }
+
+            // Destroy shooting hook
+            if (unhitHook)
+            {
+                Destroy(unhitHook);
             }
 
             // Create hook prefab at collision as child of object
@@ -251,6 +268,20 @@ public class Grapple : MonoBehaviour
         {
             // Set the second point to the missed location
             lineR.SetPosition(1, playerPosition + (initialDirection * currentRaycastLength));
+
+            if (unhitHook)
+            {
+                // Set hook sprite to end of line
+                unhitHook.transform.position = playerPosition + (initialDirection * currentRaycastLength);
+                unhitHook.transform.up = -initialDirection;
+            }
+            else
+            {
+                unhitHook = Instantiate(hook);
+                // Set hook sprite to end of line
+                unhitHook.transform.position = playerPosition + (initialDirection * currentRaycastLength);
+                unhitHook.transform.up = -initialDirection;
+            }
         }
     }
 
@@ -300,5 +331,8 @@ public class Grapple : MonoBehaviour
         {
             Destroy(myHook);
         }
+
+        if (unhitHook)
+            Destroy(unhitHook);
     }
 }
