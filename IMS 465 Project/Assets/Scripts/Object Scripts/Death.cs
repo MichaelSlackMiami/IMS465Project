@@ -18,12 +18,12 @@ public class Death : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // If the player collides with this object...
+        // If the player collides with me OR if I should destroy everything...
         if (collision.gameObject.CompareTag("Player") || killEverything)
         {
-            // ... Kill the player
+            // ... Destroy the object that collided with me
             Destroy(collision.gameObject);
         }
     }

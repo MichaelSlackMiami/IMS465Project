@@ -26,7 +26,9 @@ public class Boundary : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameManager.GameOver("OutOfBounds");
-            Debug.Log("Out of bounds");
+        } else if (collision.CompareTag("Fuel"))
+        {
+            GameManager.GameOver("FuelLost");
         }
     }
 

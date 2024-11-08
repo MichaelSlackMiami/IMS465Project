@@ -405,6 +405,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4751a93bf3b39684d9ab3759dda1a069, type: 3}
   - {fileID: 8300000, guid: f513516d4becbf04190c1aaa7a241309, type: 3}
   - {fileID: 8300000, guid: ec7699621fabf0641bc3121993e7c12e, type: 3}
+  - {fileID: 8300000, guid: ac00ecc16f34729489dfd2433e370563, type: 3}
   primaryMusic: {fileID: 9093329653023833885}
   secondaryMusic: {fileID: -6743911841723397596}
   nonLoopingMusic: {fileID: 3108775169558149883}

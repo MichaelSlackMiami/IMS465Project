@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8456024389476383365}
   - component: {fileID: 7474909602299916123}
   - component: {fileID: 5690049917377398345}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

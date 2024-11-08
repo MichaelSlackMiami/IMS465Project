@@ -72,13 +72,17 @@ public class GameManager : MonoBehaviour
         {
             // Intro scene
             primaryMusic.Stop();
+            // "Mishap"
+            nonLoopingMusic.clip = tracks[8];
+            nonLoopingMusic.Play();
         } else if (level == 2)
         {
             // World select
             if (primaryMusic.clip != tracks[0])
             {
-                // "A Good Day to be Stuck in Space"
                 primaryMusic.Stop();
+                nonLoopingMusic.Stop();
+                // "A Good Day to be Stuck in Space"
                 primaryMusic.clip = tracks[0];
                 primaryMusic.Play();
             }
@@ -87,8 +91,8 @@ public class GameManager : MonoBehaviour
             // In a World 1 level
             if (primaryMusic.clip != tracks[1])
             {
-                // "An Unstoppable Force"
                 primaryMusic.Stop();
+                // "An Unstoppable Force"
                 primaryMusic.clip = tracks[1];
                 primaryMusic.Play();
             }
@@ -114,6 +118,7 @@ public class GameManager : MonoBehaviour
                 PauseDisplay.SetActive(true);
                 paused = true;
                 primaryMusic.Pause();
+                // "Everything Stop Exploding for a Minute"
                 secondaryMusic.clip = tracks[2];
                 secondaryMusic.Play();
                 Time.timeScale = 0;
@@ -179,10 +184,10 @@ public class GameManager : MonoBehaviour
     public void GameOver(string source)
     {
         // Determine how to end the game based on the source of the Game Over
-        // Valid source list: OutOfBounds, Impact, BlackHole
+        // Valid source list: OutOfBounds, Impact, BlackHole, FuelLost
         if (source == "OutOfBounds")
         {
-            
+
         } else if (source == "Impact")
         {
             Destroy(player);
@@ -190,6 +195,9 @@ public class GameManager : MonoBehaviour
         } else if (source == "BlackHole")
         {
             Destroy(player);
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        } else if (source == "FuelLost")
+        {
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         } else
         {
