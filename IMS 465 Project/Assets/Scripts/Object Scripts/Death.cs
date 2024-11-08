@@ -21,9 +21,10 @@ public class Death : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // If the player collides with me OR if I should destroy everything...
-        if (collision.gameObject.CompareTag("Player") || killEverything)
+        if (collision.gameObject.CompareTag("Player") || (killEverything && !collision.CompareTag("Indestructable")))
         {
             // ... Destroy the object that collided with me
+            Debug.Log(collision.tag);
             Destroy(collision.gameObject);
         }
     }

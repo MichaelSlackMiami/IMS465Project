@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1052919156101076046}
   m_Layer: 2
   m_Name: Black Hole
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
