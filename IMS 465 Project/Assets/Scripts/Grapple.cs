@@ -119,7 +119,7 @@ public class Grapple : MonoBehaviour
                         hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
 
                         // Update the grapple length
-                        grappleVector = lineR.GetPosition(0) - lineR.GetPosition(1);
+                        grappleVector = (Vector3)playerPosition - myHook.transform.position;
 
                         // Check if grapple is exceeding its max length
                         if (grappleVector.magnitude > currentGrappleLength)
@@ -160,6 +160,7 @@ public class Grapple : MonoBehaviour
 
             force = Vector2.zero;
             swingForce = Vector2.zero;
+            currentGrappleLength = maxDistance;
         }
 
         if (lineOut)
