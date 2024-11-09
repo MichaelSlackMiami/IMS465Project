@@ -12,16 +12,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private Grapple grapple;
     [SerializeField] private Cam cam;
+    [SerializeField] private UI UI;
 
-    [Header("Level Clear")]
-    [SerializeField] private GameObject LevelClearDisplay1;
-    [SerializeField] private GameObject LevelClearDisplay2;
-
-    [Header("Game Over")]
-    [SerializeField] private GameObject GameOverDisplay;
-
-    [Header("Pause")]
-    [SerializeField] private GameObject PauseDisplay;
+    public bool gameOver = false;
+    public bool levelClear = false;
 
     [Header("Music")]
     [SerializeField] private AudioClip[] tracks;
@@ -58,14 +52,7 @@ public class GameManager : MonoBehaviour
             player = GameObject.Find("Player");
             grapple = GameObject.Find("Grapple").GetComponent<Grapple>();
             cam = GameObject.Find("Main Camera").GetComponent<Cam>();
-            LevelClearDisplay1 = GameObject.Find("LevelClearDisplay1");
-            LevelClearDisplay1.SetActive(false);
-            LevelClearDisplay2 = GameObject.Find("LevelClearDisplay2");
-            LevelClearDisplay2.SetActive(false);
-            GameOverDisplay = GameObject.Find("GameOverDisplay");
-            GameOverDisplay.SetActive(false);
-            PauseDisplay = GameObject.Find("PauseDisplay");
-            PauseDisplay.SetActive(false);
+            UI = GameObject.Find("Level UI").GetComponent<UI>();
         }
 
         if (level == 1)
@@ -95,6 +82,9 @@ public class GameManager : MonoBehaviour
                 // "An Unstoppable Force"
                 primaryMusic.clip = tracks[1];
                 primaryMusic.Play();
+            } else if (!primaryMusic.isPlaying)
+            {
+                primaryMusic.Play();
             }
         }
     }
@@ -102,21 +92,24 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // PAUSING
         // If the player presses P...
         if (Input.GetKeyDown(KeyCode.P))
         {
             // ... If the game is paused, unpause. Otherwise, pause.
             if (paused)
             {
-                PauseDisplay.SetActive(false);
                 paused = false;
+                UI.TogglePause(false);
                 secondaryMusic.Stop();
                 primaryMusic.UnPause();
                 Time.timeScale = 1;
+                grapple.grappleDisabled = false;
             } else
             {
-                PauseDisplay.SetActive(true);
                 paused = true;
+                grapple.grappleDisabled = true;
+                UI.TogglePause(true);
                 primaryMusic.Pause();
                 // "Everything Stop Exploding for a Minute"
                 secondaryMusic.clip = tracks[2];
@@ -125,29 +118,22 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // If the level has been cleared...
-        if (LevelClearDisplay1)
-            if (LevelClearDisplay2.activeInHierarchy)
+        // END OF LEVEL
+        if (gameOver)
+        {
+            if (Input.GetMouseButtonDown(0))
             {
-                // ... If the player left clicks...
-                if (Input.GetMouseButtonDown(0))
-                {
-                    // ... Load the World Select menu
-                    SceneManager.LoadScene("WorldSelect");
-                }
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                gameOver = false;
             }
-
-        // If the player lost...
-        if (GameOverDisplay)
-            if (GameOverDisplay.activeInHierarchy)
+        } else if (levelClear)
+        {
+            if (Input.GetMouseButtonDown(0))
             {
-                // ... If the player left clicks...
-                if (Input.GetMouseButtonDown(0))
-                {
-                    // ... Reload the current level
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                }
+                SceneManager.LoadScene("WorldSelect");
+                levelClear = false;
             }
+        }
     }
     public void LevelClear()
     {
@@ -157,29 +143,10 @@ public class GameManager : MonoBehaviour
         grapple.grappleDisabled = true;
         gameObject.GetComponent<ProgressTracker>().LevelClear();
         primaryMusic.Stop();
+        // "Fuel Can't"
         nonLoopingMusic.clip = tracks[6];
         nonLoopingMusic.Play();
-        StartCoroutine(DisplayText("LevelClear"));
-    }
-
-    private IEnumerator DisplayText(string content)
-    {
-        // Display text based on content
-        // Valid content values: "LevelClear", "GameOver"
-        if (content == "LevelClear")
-        {
-            // Display winning text
-            LevelClearDisplay1.SetActive(true);
-            yield return new WaitForSeconds(3);
-            LevelClearDisplay2.SetActive(true);
-        } else if (content == "GameOver")
-        {
-            GameOverDisplay.SetActive(true);
-        } else if (content == "Pause")
-        {
-
-        }
-
+        UI.DisplayLevelClear();
     }
     public void GameOver(string source)
     {
@@ -206,6 +173,7 @@ public class GameManager : MonoBehaviour
         }
         // Regardless of how the player lost, do the following
         cam.followPlayer = false;
-        StartCoroutine(DisplayText("GameOver"));
+        primaryMusic.Stop();
+        UI.DisplayGameOver(source);
     }
 }
