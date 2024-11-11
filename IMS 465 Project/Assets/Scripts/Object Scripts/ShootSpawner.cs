@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ShootSpawner : MonoBehaviour
+{
+    public GameObject projectile;
+
+    public Vector2 velocity;
+
+    public float waitTime;
+
+    public bool spawnImmediately;
+
+    private float timer = 0.0f;
+    private GameObject justSpawned;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (spawnImmediately)
+        {
+            Spawn();
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (timer > waitTime)
+        {
+            Spawn();
+            timer = 0.0f;
+        }
+    }
+
+    public void Spawn()
+    {
+        justSpawned = Instantiate(projectile, transform.position, Quaternion.identity);
+        if (justSpawned.GetComponent<Rigidbody2D>())
+        {
+            justSpawned.GetComponent<Rigidbody2D>().velocity = velocity;
+        }
+    }
+}
