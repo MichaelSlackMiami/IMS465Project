@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    public GameObject LinkedPortal;
+    [SerializeField] private GameObject LinkedPortal;
 
-    public float cooldownDuration = 3.0f;
-    public bool cooldownActive = false;
+    [SerializeField] private bool reacivates = true;
+    [SerializeField] private float cooldownDuration = 3.0f;
+    [SerializeField] private bool cooldownActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,17 @@ public class Portal : MonoBehaviour
         {
             // ... Teleport the object that collided with the portal to the linked portal
             collision.transform.position = LinkedPortal.transform.position;
-            StartCoroutine(CooldownTimer());
+
+            // If this portal should reactivate...
+            if (reacivates)
+            {
+                // ... Begin cooldown
+                StartCoroutine(CooldownTimer());
+            } else
+            {
+                Destroy(gameObject);
+                Destroy(LinkedPortal);
+            }
         }
     }
 
