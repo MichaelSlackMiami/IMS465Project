@@ -13,6 +13,13 @@ public class Boundary : MonoBehaviour
     void Start()
     {
         GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (myOOB == null)
+        {
+            // Create Out of Bounds zone
+            myOOB = Instantiate(OutOfBounds);
+            myOOB.transform.position = transform.position;
+            myOOB.transform.localScale = (transform.lossyScale * 2);
+        }
     }
 
     // Update is called once per frame
@@ -34,9 +41,12 @@ public class Boundary : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        // Create Out of Bounds zone
-        myOOB = Instantiate(OutOfBounds);
-        myOOB.transform.position = transform.position;
-        myOOB.transform.localScale = (transform.lossyScale * 2);
+        if (myOOB == null)
+        {
+            // Create Out of Bounds zone
+            myOOB = Instantiate(OutOfBounds);
+            myOOB.transform.position = transform.position;
+            myOOB.transform.localScale = (transform.lossyScale * 2);
+        }
     }
 }

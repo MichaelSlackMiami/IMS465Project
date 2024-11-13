@@ -8,7 +8,7 @@ public class ShootSpawner : MonoBehaviour
 
     public Vector2 velocity;
 
-    public float waitTime;
+    public float waitTime = 5.0f;
 
     public bool spawnImmediately;
 
