@@ -316,8 +316,8 @@ public class Grapple : MonoBehaviour
         }
         else
         {
-            // Just get the player if the object is stationary
-            systemMass = player.mass;
+            // Up the system mass enough to not get any stretch
+            systemMass = 15 * player.mass;
         }
 
         swingForce *= systemMass;
