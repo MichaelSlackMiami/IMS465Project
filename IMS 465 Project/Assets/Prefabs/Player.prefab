@@ -604,3 +604,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
+  hasShield: 0
+  bumperMat: {fileID: 6200000, guid: 7e96bccb26ccd0c4f9d8f7c735d9dc78, type: 2}

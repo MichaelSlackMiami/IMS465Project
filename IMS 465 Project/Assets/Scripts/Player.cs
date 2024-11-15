@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameManager GameManager;
 
     public bool hasShield = false;
+    public PhysicsMaterial2D bumperMat;
 
     // Start is called before the first frame update
     void Start()
@@ -40,13 +41,15 @@ public class Player : MonoBehaviour
     public void Shield()
     {
         hasShield = true;
-        GetComponent<Rigidbody2D>().sharedMaterial.bounciness *= 4;
+        GetComponent<Rigidbody2D>().sharedMaterial = bumperMat;
+        GetComponent<SpriteRenderer>().color = Color.red;
     }
 
     public void RemoveShield()
     {
         hasShield = false;
-        GetComponent<Rigidbody2D>().sharedMaterial.bounciness /= 4;
+        GetComponent<Rigidbody2D>().sharedMaterial = null;
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     IEnumerator Phase(float time)
