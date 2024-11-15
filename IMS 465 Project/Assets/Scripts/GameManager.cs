@@ -25,6 +25,19 @@ public class GameManager : MonoBehaviour
 
     private static GameManager instance;
 
+    private void Start()
+    {
+        if (GameObject.Find("Player") != null)
+        {
+            // Identify necessary elements in scene
+            player = GameObject.Find("Player");
+            grapple = GameObject.Find("Grapple").GetComponent<Grapple>();
+            cam = GameObject.Find("Main Camera").GetComponent<Cam>();
+            UI = GameObject.Find("Level UI").GetComponent<UI>();
+        }
+    
+    }
+
     void Awake()
     {
         // If a GameManager does not already exist...
@@ -146,7 +159,7 @@ public class GameManager : MonoBehaviour
         // "Fuel Can't"
         nonLoopingMusic.clip = tracks[6];
         nonLoopingMusic.Play();
-        UI.DisplayLevelClear();
+        StartCoroutine(UI.DisplayLevelClear());
     }
     public void GameOver(string source)
     {

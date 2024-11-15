@@ -26,7 +26,7 @@ public class Fuel : MonoBehaviour
             GameManager.LevelClear();
 
             // Destroy self for visual feedback
-            Destroy(gameObject);
+            // Destroy(gameObject);
         }
     }
 }
