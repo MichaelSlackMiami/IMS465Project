@@ -25,8 +25,15 @@ public class TerminalImpact : MonoBehaviour
             // ... If the impact has enough force...
             if (collision.relativeVelocity.magnitude > terminalImpactThreshold)
             {
-                // ... Alert the GameManager that the player has died
-                GameManager.GameOver("Impact");
+                if (collision.gameObject.GetComponent<Player>().hasShield)
+                {
+                    collision.gameObject.GetComponent<Player>().RemoveShield();
+                }
+                else
+                {
+                    // ... Alert the GameManager that the player has died
+                    GameManager.GameOver("Impact");
+                }
             }
         }
     }
