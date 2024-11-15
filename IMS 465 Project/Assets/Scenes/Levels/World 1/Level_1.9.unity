@@ -2512,7 +2512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldIndex: 1
-  levelIndex: 0
+  levelIndex: 8
 --- !u!4 &1579960107
 Transform:
   m_ObjectHideFlags: 0
