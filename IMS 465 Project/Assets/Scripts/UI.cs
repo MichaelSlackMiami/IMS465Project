@@ -55,7 +55,8 @@ public class UI : MonoBehaviour
     {
         TextBG.SetActive(true);
         txtFuelFound.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4.5f);
+        txtFuelEmpty.SetActive(true);
         txtClickContinue.SetActive(true);
         GM.levelClear = true;
     }
