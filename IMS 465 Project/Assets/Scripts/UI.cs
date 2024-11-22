@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class UI : MonoBehaviour
 {
     [SerializeField] private GameManager GM;
+    [SerializeField] private LevelData LD;
     [SerializeField] private GameObject TextBG;
 
     [Header("Level Clear")]
@@ -21,6 +22,11 @@ public class UI : MonoBehaviour
     [Header("Pause")]
     [SerializeField] private GameObject PauseBG;
     [SerializeField] private GameObject txtPause;
+
+    [Header("Stars")]
+    [SerializeField] public GameObject star1;
+    [SerializeField] public GameObject star2;
+    [SerializeField] public GameObject star3;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +61,8 @@ public class UI : MonoBehaviour
     {
         TextBG.SetActive(true);
         txtFuelFound.SetActive(true);
+        DisplayStars();
+            
         yield return new WaitForSeconds(4.5f);
         txtFuelEmpty.SetActive(true);
         txtClickContinue.SetActive(true);
@@ -88,5 +96,21 @@ public class UI : MonoBehaviour
         }
         txtClickRetry.SetActive(true);
         GM.gameOver = true;
+    }
+
+    public void DisplayStars()
+    {
+        LD = GameObject.Find("LevelData").GetComponent<LevelData>();
+
+        if (LD)
+        {
+            star1.SetActive(true);
+
+            if (LD.star2time > LD.time)
+                star2.SetActive(true);
+
+            if (LD.star3time > LD.time)
+                star3.SetActive(true);
+        }
     }
 }
