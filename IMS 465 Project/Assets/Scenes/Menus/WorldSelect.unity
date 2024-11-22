@@ -500,6 +500,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: World_02
+  story: 2
+  shownStory: 0
 --- !u!1 &536706864
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +681,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: World_03
+  story: 3
+  shownStory: 0
 --- !u!1 &628034341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,6 +1352,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: World_01
+  story: 1
+  shownStory: 0
 --- !u!4 &1096332472
 Transform:
   m_ObjectHideFlags: 0

@@ -113,4 +113,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/World 3/Level_3.10.unity
     guid: 2891224178e7de44ea8c5e447d2590a6
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryScene_Ending.unity
+    guid: 1396871cb04192c4d83fb13110fd9a75
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryScene_w1.unity
+    guid: 5c2ad9e819f9ba14bbd322c551f2e47e
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryScene_w2.unity
+    guid: fe2c4bc6368a02d409abb50cd7634a52
+  - enabled: 1
+    path: Assets/Scenes/Story/StoryScene_w3.unity
+    guid: 72e344f1a5abf7243bbdbab2a5700bc3
   m_configObjects: {}

@@ -12,6 +12,8 @@ public class ProgressTracker : MonoBehaviour
     public int[] stars_2;
     public int[] stars_3;
 
+    public bool story_w1, story_w2, story_w3;
+
     private void Start()
     {
         GetSave();
@@ -42,6 +44,10 @@ public class ProgressTracker : MonoBehaviour
         world_1[0] = 1;
         world_2[0] = 1;
         world_3[0] = 1;
+
+        story_w1 = PlayerPrefs.GetInt("story_w1") == 1;
+        story_w2 = PlayerPrefs.GetInt("story_w2") == 1;
+        story_w3 = PlayerPrefs.GetInt("story_w3") == 1;
     }
 
     public void Save()
@@ -63,6 +69,12 @@ public class ProgressTracker : MonoBehaviour
 
         for (int i = 0; i < stars_3.Length; i++)
             PlayerPrefs.SetInt("stars_3_" + i, stars_3[i]);
+
+        PlayerPrefs.SetInt("story_w1", story_w1 ? 1 : 0);
+        PlayerPrefs.SetInt("story_w2", story_w2 ? 1 : 0);
+        PlayerPrefs.SetInt("story_w3", story_w3 ? 1 : 0);
+
+        PlayerPrefs.Save();
 
         Debug.Log("Saved");
     }
@@ -139,6 +151,10 @@ public class ProgressTracker : MonoBehaviour
         world_1[0] = 1;
         world_2[0] = 1;
         world_3[0] = 1;
+
+        story_w1 = false;
+        story_w2 = false;
+        story_w3 = false;
     }
 
     public void UnlockAll()
@@ -151,5 +167,9 @@ public class ProgressTracker : MonoBehaviour
 
         for (int i = 0; i < world_3.Length; i++)
             world_3[i] = 1;
+
+        story_w1 = true;
+        story_w2 = true;
+        story_w3 = true;
     }
 }
