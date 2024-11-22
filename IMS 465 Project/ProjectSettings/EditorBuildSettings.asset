@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/MainMenu.unity
     guid: 2ad2a01efb492b44fb613b07b3509a5a
   - enabled: 1
-    path: Assets/Scenes/Menus/StoryScene.unity
+    path: Assets/Scenes/Menus/StoryScene_Intro.unity
     guid: e61a6710bc8b19f4581e15abbaecc706
   - enabled: 1
     path: Assets/Scenes/Menus/WorldSelect.unity
