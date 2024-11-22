@@ -68,6 +68,20 @@ public class SceneLoader : MonoBehaviour
                         SceneManager.LoadScene(sceneName);
                     }
                     break;
+                case 4:
+                    shownStory = ProgressTracker.story_intro;
+
+                    if (!shownStory)
+                    {
+                        ProgressTracker.story_intro = true;
+                        ProgressTracker.Save();
+                        SceneManager.LoadScene("StoryScene_Intro");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene(sceneName);
+                    }
+                    break;
                 default:
                     SceneManager.LoadScene(sceneName);
                     break;
