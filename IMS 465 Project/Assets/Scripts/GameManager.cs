@@ -59,9 +59,10 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        if (level != 0 && level != 1 && level != 2 && level != 3)
+        // If this is not a menu or story scene...
+        if (level != 0 && level != 1 && level != 2 && level != 3 && level != 4 && level != 15 && level != 16 && level != 27 && level != 28 && level != 39)
         {
-            // Identify necessary elements in scene
+            // ... Identify necessary elements in scene
             player = GameObject.Find("Player");
             grapple = GameObject.Find("Grapple").GetComponent<Grapple>();
             cam = GameObject.Find("Main Camera").GetComponent<Cam>();
@@ -105,32 +106,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // PAUSING
-        // If the player presses P...
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            // ... If the game is paused, unpause. Otherwise, pause.
-            if (paused)
-            {
-                paused = false;
-                UI.TogglePause(false);
-                secondaryMusic.Stop();
-                primaryMusic.UnPause();
-                Time.timeScale = 1;
-                grapple.grappleDisabled = false;
-            } else
-            {
-                paused = true;
-                grapple.grappleDisabled = true;
-                UI.TogglePause(true);
-                primaryMusic.Pause();
-                // "Everything Stop Exploding for a Minute"
-                secondaryMusic.clip = tracks[2];
-                secondaryMusic.Play();
-                Time.timeScale = 0;
-            }
-        }
-
         // END OF LEVEL
         if (gameOver)
         {
@@ -148,6 +123,27 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void TogglePause(bool paused)
+    {
+        // ... Set the pause state according to input
+        if (paused)
+        {
+            grapple.grappleDisabled = true;
+            primaryMusic.Pause();
+            // "Everything Stop Exploding for a Minute"
+            secondaryMusic.clip = tracks[2];
+            secondaryMusic.Play();
+            Time.timeScale = 0;
+        }
+        else
+        {
+            secondaryMusic.Stop();
+            primaryMusic.UnPause();
+            Time.timeScale = 1;
+            grapple.grappleDisabled = false;
+        }
+    }
+    
     public void LevelClear()
     {
         // Lock the camera position and freeze the player

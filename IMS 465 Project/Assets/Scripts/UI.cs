@@ -22,6 +22,8 @@ public class UI : MonoBehaviour
     [Header("Pause")]
     [SerializeField] private GameObject PauseBG;
     [SerializeField] private GameObject txtPause;
+    [SerializeField] private GameObject btnExitLevel;
+    private bool paused = false;
 
     [Header("Stars")]
     [SerializeField] public GameObject star1;
@@ -43,18 +45,33 @@ public class UI : MonoBehaviour
         txtClickRetry.SetActive(false);
         PauseBG.SetActive(false);
         txtPause.SetActive(false);
+        btnExitLevel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // If you press P...
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            // ... Set the pause state to the opposite of what it currently is
+            GM.TogglePause(!paused);
+            TogglePause(!paused);
+            paused = !paused;
+        }
     }
 
     public void TogglePause(bool paused)
     {
         PauseBG.SetActive(paused);
         txtPause.SetActive(paused);
+        btnExitLevel.SetActive(paused);
+    }
+
+    public void ExitLevel()
+    {
+        TogglePause(false);
+        SceneManager.LoadScene("WorldSelect");
     }
 
     public IEnumerator DisplayLevelClear()

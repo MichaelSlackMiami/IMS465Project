@@ -2038,10 +2038,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 130859374634386868, guid: f7942717f9a0e69408652e60727551cf, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2579937775908312942, guid: f7942717f9a0e69408652e60727551cf, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2122,21 +2118,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3816012647975240903, guid: f7942717f9a0e69408652e60727551cf, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5698249528969709317, guid: f7942717f9a0e69408652e60727551cf, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6991886299566317441, guid: f7942717f9a0e69408652e60727551cf, type: 3}
       propertyPath: m_Name
       value: Level UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292768924323045485, guid: f7942717f9a0e69408652e60727551cf, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2513,6 +2497,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldIndex: 1
   levelIndex: 0
+  counting: 1
+  time: 0
+  star3time: 20
+  star2time: 40
 --- !u!4 &1579960107
 Transform:
   m_ObjectHideFlags: 0
