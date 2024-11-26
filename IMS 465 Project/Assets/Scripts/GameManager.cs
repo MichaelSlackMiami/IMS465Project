@@ -47,8 +47,8 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // ... Start music
-            primaryMusic.clip = tracks[4];
+            // ... Start "Resolve"
+            primaryMusic.clip = tracks[0];
             primaryMusic.Play();
         }
         else if (instance != this)
@@ -73,33 +73,79 @@ public class GameManager : MonoBehaviour
         {
             // Intro scene
             primaryMusic.Stop();
-            // "Mishap"
-            nonLoopingMusic.clip = tracks[8];
+            // "A Mission"
+            nonLoopingMusic.clip = tracks[1];
             nonLoopingMusic.Play();
-        } else if (level == 2)
+        }
+        else if (level == 3 || level == 15 || level == 27)
+        {
+            // Story scene
+            primaryMusic.Stop();
+            // "Mishap"
+            nonLoopingMusic.clip = tracks[3];
+            nonLoopingMusic.Play();
+        }
+        else if (level == 2 || level == 4 || level == 16 || level == 28)
         {
             // World select
-            if (primaryMusic.clip != tracks[0])
+            nonLoopingMusic.Stop();
+            if (primaryMusic.clip != tracks[2] || !primaryMusic.isPlaying)
             {
                 primaryMusic.Stop();
-                nonLoopingMusic.Stop();
                 // "A Good Day to be Stuck in Space"
-                primaryMusic.clip = tracks[0];
+                primaryMusic.clip = tracks[2];
                 primaryMusic.Play();
             }
-        } else if (level == 4 || level == 5 || level == 6)
+        } else if (level > 4 && level < 15)
         {
             // In a World 1 level
-            if (primaryMusic.clip != tracks[1])
+            if (primaryMusic.clip != tracks[4])
             {
                 primaryMusic.Stop();
-                // "An Unstoppable Force"
-                primaryMusic.clip = tracks[1];
+                // "The Journey"
+                primaryMusic.clip = tracks[4];
                 primaryMusic.Play();
             } else if (!primaryMusic.isPlaying)
             {
                 primaryMusic.Play();
             }
+        }
+        else if (level > 16 && level < 27)
+        {
+            // In a World 2 level
+            if (primaryMusic.clip != tracks[5])
+            {
+                primaryMusic.Stop();
+                // "An Unstoppable Force"
+                primaryMusic.clip = tracks[5];
+                primaryMusic.Play();
+            }
+            else if (!primaryMusic.isPlaying)
+            {
+                primaryMusic.Play();
+            }
+        }
+        else if (level > 28 && level < 39)
+        {
+            // In a World 3 level
+            if (primaryMusic.clip != tracks[6])
+            {
+                primaryMusic.Stop();
+                // "Peril"
+                primaryMusic.clip = tracks[6];
+                primaryMusic.Play();
+            }
+            else if (!primaryMusic.isPlaying)
+            {
+                primaryMusic.Play();
+            }
+        } else if (level == 39)
+        {
+            // Closing scene
+            primaryMusic.Stop();
+            // "The Destination"
+            nonLoopingMusic.clip = tracks[7];
+            nonLoopingMusic.Play();
         }
     }
 
@@ -131,7 +177,7 @@ public class GameManager : MonoBehaviour
             grapple.grappleDisabled = true;
             primaryMusic.Pause();
             // "Everything Stop Exploding for a Minute"
-            secondaryMusic.clip = tracks[2];
+            secondaryMusic.clip = tracks[8];
             secondaryMusic.Play();
             Time.timeScale = 0;
         }
@@ -153,7 +199,7 @@ public class GameManager : MonoBehaviour
         gameObject.GetComponent<ProgressTracker>().LevelClear();
         primaryMusic.Stop();
         // "Fuel Can't"
-        nonLoopingMusic.clip = tracks[6];
+        nonLoopingMusic.clip = tracks[10];
         nonLoopingMusic.Play();
         StartCoroutine(UI.DisplayLevelClear());
     }

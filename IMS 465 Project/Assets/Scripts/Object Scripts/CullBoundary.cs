@@ -19,6 +19,5 @@ public class CullBoundary : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         Destroy(collision.gameObject);
-        Debug.Log("" + collision.gameObject.name + " has been culled.");
     }
 }

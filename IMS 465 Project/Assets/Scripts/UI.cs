@@ -70,6 +70,7 @@ public class UI : MonoBehaviour
 
     public void ExitLevel()
     {
+        GM.TogglePause(false);
         TogglePause(false);
         SceneManager.LoadScene("WorldSelect");
     }
