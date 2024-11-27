@@ -11,6 +11,7 @@ public class ShootSpawner : MonoBehaviour
     public float waitTime = 5.0f;
 
     public bool spawnImmediately;
+    public bool isSpawning = true;
 
     private float timer = 0.0f;
     private GameObject justSpawned;
@@ -31,7 +32,8 @@ public class ShootSpawner : MonoBehaviour
 
         if (timer > waitTime)
         {
-            Spawn();
+            if (isSpawning)
+                Spawn();
             timer = 0.0f;
         }
     }
