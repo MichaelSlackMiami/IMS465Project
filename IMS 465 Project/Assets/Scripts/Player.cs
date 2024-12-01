@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameManager GameManager;
 
     public bool hasShield = false;
+    public bool invincible = false;
     public PhysicsMaterial2D bumperMat;
 
     // Start is called before the first frame update

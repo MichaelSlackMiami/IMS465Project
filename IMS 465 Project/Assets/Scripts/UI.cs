@@ -111,6 +111,21 @@ public class UI : MonoBehaviour
         } else if (source == "BlackHole")
         {
             txtGameOver.GetComponent<Text>().text = "Maybe stay away from that next time.";
+        } else if (source == "Incineration")
+        {
+            int message = Random.Range(1, 4);
+            if (message == 1)
+            {
+                txtGameOver.GetComponent<Text>().text = "Little toasty in here.";
+            }
+            else if (message == 2)
+            {
+                txtGameOver.GetComponent<Text>().text = "So THAT'S how Icarus felt...";
+            }
+            else if (message == 3)
+            {
+                txtGameOver.GetComponent<Text>().text = "Your sunscreen is not strong enough for that.";
+            }
         }
         txtClickRetry.SetActive(true);
         GM.gameOver = true;

@@ -194,6 +194,7 @@ public class GameManager : MonoBehaviour
     {
         // Lock the camera position and freeze the player
         cam.followPlayer = false;
+        player.GetComponent<Player>().invincible = true;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         grapple.grappleDisabled = true;
         gameObject.GetComponent<ProgressTracker>().LevelClear();

@@ -32,7 +32,10 @@ public class Boundary : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            GameManager.GameOver("OutOfBounds");
+            if (collision.isActiveAndEnabled)
+            {
+                GameManager.GameOver("OutOfBounds");
+            }
         } else if (collision.CompareTag("Fuel"))
         {
             if (collision.isActiveAndEnabled)

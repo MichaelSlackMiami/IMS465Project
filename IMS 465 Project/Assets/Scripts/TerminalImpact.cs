@@ -29,7 +29,7 @@ public class TerminalImpact : MonoBehaviour
                 {
                     collision.gameObject.GetComponent<Player>().RemoveShield();
                 }
-                else
+                else if (collision.gameObject.GetComponent<Player>().invincible == false)
                 {
                     // ... Alert the GameManager that the player has died
                     GameManager.GameOver("Impact");
