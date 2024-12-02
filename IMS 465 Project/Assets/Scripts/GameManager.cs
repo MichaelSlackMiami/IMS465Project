@@ -169,10 +169,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void TogglePause(bool paused)
+    public void TogglePause(bool pause)
     {
         // ... Set the pause state according to input
-        if (paused)
+        if (pause)
         {
             grapple.grappleDisabled = true;
             primaryMusic.Pause();

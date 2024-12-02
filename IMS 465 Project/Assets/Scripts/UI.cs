@@ -23,6 +23,9 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject PauseBG;
     [SerializeField] private GameObject txtPause;
     [SerializeField] private GameObject btnExitLevel;
+    [SerializeField] private Image btnIcon;
+    [SerializeField] private Sprite pauseIcon;
+    [SerializeField] private Sprite resumeIcon;
     private bool paused = false;
 
     [Header("Stars")]
@@ -51,27 +54,29 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // If you press P...
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            // ... Set the pause state to the opposite of what it currently is
-            GM.TogglePause(!paused);
-            TogglePause(!paused);
-            paused = !paused;
-        }
+
     }
 
-    public void TogglePause(bool paused)
+    public void TogglePause()
     {
+        paused = !paused;
+        GM.TogglePause(paused);
         PauseBG.SetActive(paused);
         txtPause.SetActive(paused);
         btnExitLevel.SetActive(paused);
+        if (paused)
+        {
+            btnIcon.sprite = resumeIcon;
+        } else
+        {
+            btnIcon.sprite = pauseIcon;
+        }
     }
 
     public void ExitLevel()
     {
         GM.TogglePause(false);
-        TogglePause(false);
+        TogglePause();
         SceneManager.LoadScene("WorldSelect");
     }
 
