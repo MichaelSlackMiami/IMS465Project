@@ -500,6 +500,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boundary
       objectReference: {fileID: 0}
+    - target: {fileID: 1168162446410083698, guid: 2936607401ef5dd43a92f9a718967cff, type: 3}
+      propertyPath: m_TagString
+      value: Indestructable
+      objectReference: {fileID: 0}
     - target: {fileID: 1808724656573049157, guid: 2936607401ef5dd43a92f9a718967cff, type: 3}
       propertyPath: m_LocalScale.x
       value: 57.721745
