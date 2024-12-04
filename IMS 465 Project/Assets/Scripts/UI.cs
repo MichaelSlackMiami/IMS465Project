@@ -15,6 +15,11 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject txtFuelEmpty;
     [SerializeField] private GameObject txtClickContinue;
 
+    [Header("World Clear")]
+    [SerializeField] private GameObject txtWorldClear;
+    [SerializeField] private GameObject txtFuelFull;
+    [SerializeField] private GameObject txtClickNext;
+
     [Header("Game Over")]
     [SerializeField] private GameObject txtGameOver;
     [SerializeField] private GameObject txtClickRetry;
@@ -49,6 +54,9 @@ public class UI : MonoBehaviour
         PauseBG.SetActive(false);
         txtPause.SetActive(false);
         btnExitLevel.SetActive(false);
+        txtWorldClear.SetActive(false);
+        txtFuelFull.SetActive(false);
+        txtClickNext.SetActive(false);
     }
 
     // Update is called once per frame
@@ -89,6 +97,17 @@ public class UI : MonoBehaviour
         yield return new WaitForSeconds(4.5f);
         txtFuelEmpty.SetActive(true);
         txtClickContinue.SetActive(true);
+        GM.levelClear = true;
+    }
+    public IEnumerator DisplayWorldClear()
+    {
+        TextBG.SetActive(true);
+        txtWorldClear.SetActive(true);
+        yield return new WaitForSeconds(1.8f);
+        txtFuelFull.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        txtClickNext.SetActive(true);
+        DisplayStars();
         GM.levelClear = true;
     }
 

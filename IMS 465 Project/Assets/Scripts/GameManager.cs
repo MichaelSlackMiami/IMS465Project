@@ -199,10 +199,19 @@ public class GameManager : MonoBehaviour
         grapple.grappleDisabled = true;
         gameObject.GetComponent<ProgressTracker>().LevelClear();
         primaryMusic.Stop();
-        // "Fuel Can't"
-        nonLoopingMusic.clip = tracks[10];
-        nonLoopingMusic.Play();
-        StartCoroutine(UI.DisplayLevelClear());
+        if (SceneManager.GetActiveScene().buildIndex == 14 || SceneManager.GetActiveScene().buildIndex == 26 || SceneManager.GetActiveScene().buildIndex == 38)
+        {
+            // "Fuel CAN!"
+            nonLoopingMusic.clip = tracks[11];
+            nonLoopingMusic.Play();
+            StartCoroutine(UI.DisplayWorldClear());
+        } else
+        {
+            // "Fuel Can't"
+            nonLoopingMusic.clip = tracks[10];
+            nonLoopingMusic.Play();
+            StartCoroutine(UI.DisplayLevelClear());
+        }
     }
     public void GameOver(string source)
     {
