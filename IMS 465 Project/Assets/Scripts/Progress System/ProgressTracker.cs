@@ -12,7 +12,7 @@ public class ProgressTracker : MonoBehaviour
     public int[] stars_2;
     public int[] stars_3;
 
-    public bool story_w1, story_w2, story_w3, story_intro;
+    public bool story_w1, story_w2, story_w3, story_intro, story_outro;
 
     private void Start()
     {
@@ -49,6 +49,7 @@ public class ProgressTracker : MonoBehaviour
         story_w2 = PlayerPrefs.GetInt("story_w2") == 1;
         story_w3 = PlayerPrefs.GetInt("story_w3") == 1;
         story_intro = PlayerPrefs.GetInt("story_intro") == 1;
+        story_outro = PlayerPrefs.GetInt("story_outro") == 1;
     }
 
     public void Save()
@@ -75,6 +76,7 @@ public class ProgressTracker : MonoBehaviour
         PlayerPrefs.SetInt("story_w2", story_w2 ? 1 : 0);
         PlayerPrefs.SetInt("story_w3", story_w3 ? 1 : 0);
         PlayerPrefs.SetInt("story_intro", story_intro ? 1 : 0);
+        PlayerPrefs.SetInt("story_outro", story_outro ? 1 : 0);
 
         PlayerPrefs.Save();
 
@@ -158,6 +160,7 @@ public class ProgressTracker : MonoBehaviour
         story_w2 = false;
         story_w3 = false;
         story_intro = false;
+        story_outro = false;
 
         Save();
     }
@@ -177,6 +180,7 @@ public class ProgressTracker : MonoBehaviour
         story_w2 = true;
         story_w3 = true;
         story_intro = true;
+        story_outro = true;
 
         Save();
     }

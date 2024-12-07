@@ -85,6 +85,19 @@ public class UI : MonoBehaviour
     {
         GM.TogglePause(false);
         TogglePause();
+
+        ProgressTracker PT = GM.GetComponent<ProgressTracker>();
+        Debug.Log("Got PT!");
+
+        if (!PT.story_outro && PT.stars_1[9] > 0 && PT.stars_2[9] > 0 && PT.stars_3[9] > 0)
+        {
+            Debug.Log("Win Scene!");
+            PT.story_outro = true;
+            PT.Save();
+            SceneManager.LoadScene("StoryScene_Ending");
+            return;
+        }
+
         SceneManager.LoadScene("WorldSelect");
     }
 
