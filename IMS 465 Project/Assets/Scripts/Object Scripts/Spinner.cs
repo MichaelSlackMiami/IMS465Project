@@ -5,6 +5,8 @@ using UnityEngine;
 public class Spinner : MonoBehaviour
 {
     public Rigidbody2D myRB;
+    [SerializeField] private float acceleration = 1.0f;
+    [SerializeField] private float spinSpeed = 50.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +17,10 @@ public class Spinner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        myRB.rotation += 0.5f;
+        if (Mathf.Abs(myRB.angularVelocity) < spinSpeed)
+        {
+            myRB.AddTorque(acceleration * -1);
+        }
+
     }
 }

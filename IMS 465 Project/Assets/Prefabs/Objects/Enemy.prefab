@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1597123083662026832}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 12, y: 12, z: 12}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -213,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 6517954870823505117}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.049023747, y: 0.049023747, z: 0.049023747}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killEverything: 0
-  source: 
+  source: Incineration
 --- !u!114 &683609700934062821
 MonoBehaviour:
   m_ObjectHideFlags: 0

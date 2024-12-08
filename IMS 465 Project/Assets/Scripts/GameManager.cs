@@ -220,18 +220,22 @@ public class GameManager : MonoBehaviour
         if (source == "OutOfBounds")
         {
 
-        } else if (source == "Impact")
+        }
+        else if (source == "Impact")
         {
             Destroy(player);
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        } else if (source == "BlackHole")
+        }
+        else if (source == "BlackHole")
         {
             Destroy(player);
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        } else if (source == "FuelLost")
+        }
+        else if (source == "FuelLost")
         {
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        } else
+        }
+        else
         {
             Destroy(player);
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;

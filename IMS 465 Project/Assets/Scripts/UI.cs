@@ -161,7 +161,7 @@ public class UI : MonoBehaviour
             }
             else if (message == 3)
             {
-                txtGameOver.GetComponent<Text>().text = "Your sunscreen is not strong enough for that.";
+                txtGameOver.GetComponent<Text>().text = "Crispy.";
             }
         }
         txtClickRetry.SetActive(true);
