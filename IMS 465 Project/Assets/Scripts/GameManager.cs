@@ -228,7 +228,6 @@ public class GameManager : MonoBehaviour
         }
         else if (source == "BlackHole")
         {
-            Destroy(player);
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         }
         else if (source == "FuelLost")
