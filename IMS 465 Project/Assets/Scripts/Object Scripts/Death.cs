@@ -25,7 +25,8 @@ public class Death : MonoBehaviour
         if ((collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<Player>().invincible == false) || (killEverything && !collision.CompareTag("Indestructable")))
         {
             // ... Destroy the object that collided with me
-            GameObject.Find("GameManager").GetComponent<GameManager>().GameOver(source);
+            if (collision.gameObject.CompareTag("Player"))
+                GameObject.Find("GameManager").GetComponent<GameManager>().GameOver(source);
             Destroy(collision.gameObject);
         }
     }
