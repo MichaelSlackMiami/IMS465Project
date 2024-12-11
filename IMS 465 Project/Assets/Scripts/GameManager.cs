@@ -164,8 +164,21 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                SceneManager.LoadScene("WorldSelect");
+                ProgressTracker PT = GetComponent<ProgressTracker>();
+
                 levelClear = false;
+
+                if (!PT.story_outro && PT.stars_1[9] > 0 && PT.stars_2[9] > 0 && PT.stars_3[9] > 0)
+                {
+                    Debug.Log("Win Scene!");
+                    PT.story_outro = true;
+                    PT.Save();
+                    SceneManager.LoadScene("StoryScene_Ending");
+                    return;
+                } else
+                {
+                    SceneManager.LoadScene("WorldSelect");
+                }
             }
         }
     }
