@@ -1485,6 +1485,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldIndex: 1
   levelIndex: 0
+  counting: 1
+  time: 0
+  star3time: 20
+  star2time: 40
 --- !u!4 &1579960107
 Transform:
   m_ObjectHideFlags: 0
@@ -1947,7 +1951,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5777365992665904220, guid: 8ddc0a1b4e7f4ed409dedcfce1b350aa, type: 3}
       propertyPath: velocity.x
-      value: -1
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 7976299147526624251, guid: 8ddc0a1b4e7f4ed409dedcfce1b350aa, type: 3}
       propertyPath: m_Name
