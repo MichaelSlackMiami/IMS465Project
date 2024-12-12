@@ -9,6 +9,7 @@ public class Portal : MonoBehaviour
     [SerializeField] private bool reacivates = true;
     [SerializeField] private float cooldownDuration = 3.0f;
     [SerializeField] private bool cooldownActive = false;
+    [SerializeField] private bool playerOnly = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,26 +20,24 @@ public class Portal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        transform.Rotate(0, 0, 0.05f);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         // If this portal is not on cooldown...
-        if (cooldownActive == false)
+        if (cooldownActive == false && (!playerOnly || (playerOnly && collision.CompareTag("Player"))))
         {
             // ... Teleport the object that collided with the portal to the linked portal
             collision.transform.position = LinkedPortal.transform.position;
+            gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+            LinkedPortal.GetComponent<SpriteRenderer>().color = Color.gray;
 
             // If this portal should reactivate...
             if (reacivates)
             {
                 // ... Begin cooldown
                 StartCoroutine(CooldownTimer());
-            } else
-            {
-                Destroy(gameObject);
-                Destroy(LinkedPortal);
             }
         }
     }
@@ -51,5 +50,7 @@ public class Portal : MonoBehaviour
         yield return new WaitForSeconds(cooldownDuration);
         cooldownActive = false;
         LinkedPortal.GetComponent<Portal>().cooldownActive = false;
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        LinkedPortal.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
