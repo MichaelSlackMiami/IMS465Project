@@ -164,6 +164,10 @@ public class UI : MonoBehaviour
                 txtGameOver.GetComponent<Text>().text = "Crispy.";
             }
         }
+        else if (source == "FuelLost")
+        {
+            txtGameOver.GetComponent<Text>().text = "The fuel seems to have drifted off!";
+        }
         txtClickRetry.SetActive(true);
         GM.gameOver = true;
     }
