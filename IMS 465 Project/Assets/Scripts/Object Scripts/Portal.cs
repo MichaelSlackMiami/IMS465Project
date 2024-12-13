@@ -11,6 +11,8 @@ public class Portal : MonoBehaviour
     [SerializeField] private bool cooldownActive = false;
     [SerializeField] private bool playerOnly = false;
 
+    [SerializeField] private bool enterNotStay = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,19 +27,44 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // If this portal is not on cooldown...
-        if (cooldownActive == false && (!playerOnly || (playerOnly && collision.CompareTag("Player"))))
+        if (!enterNotStay)
         {
-            // ... Teleport the object that collided with the portal to the linked portal
-            collision.transform.position = LinkedPortal.transform.position;
-            gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
-            LinkedPortal.GetComponent<SpriteRenderer>().color = Color.gray;
-
-            // If this portal should reactivate...
-            if (reacivates)
+            // If this portal is not on cooldown...
+            if (cooldownActive == false && (!playerOnly || (playerOnly && collision.CompareTag("Player"))))
             {
-                // ... Begin cooldown
-                StartCoroutine(CooldownTimer());
+                // ... Teleport the object that collided with the portal to the linked portal
+                collision.transform.position = LinkedPortal.transform.position;
+                gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+                LinkedPortal.GetComponent<SpriteRenderer>().color = Color.gray;
+
+                // If this portal should reactivate...
+                if (reacivates)
+                {
+                    // ... Begin cooldown
+                    StartCoroutine(CooldownTimer());
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (enterNotStay)
+        {
+            // If this portal is not on cooldown...
+            if (cooldownActive == false && (!playerOnly || (playerOnly && collision.CompareTag("Player"))))
+            {
+                // ... Teleport the object that collided with the portal to the linked portal
+                collision.transform.position = LinkedPortal.transform.position;
+                gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+                LinkedPortal.GetComponent<SpriteRenderer>().color = Color.gray;
+
+                // If this portal should reactivate...
+                if (reacivates)
+                {
+                    // ... Begin cooldown
+                    StartCoroutine(CooldownTimer());
+                }
             }
         }
     }
