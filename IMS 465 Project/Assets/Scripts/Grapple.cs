@@ -50,6 +50,9 @@ public class Grapple : MonoBehaviour
     private Vector2 playerPosition;
     private Vector2 mouse;
 
+    [Header("GameManager")]
+    [SerializeField] private GameManager GM;
+
 
     [Header("Object")]
     private RaycastHit2D hit;
@@ -67,6 +70,9 @@ public class Grapple : MonoBehaviour
         // Set the debug range indicator's size
         rangeIndicator.transform.localScale *= (2 * maxDistance);
         currentGrappleLength = maxDistance;
+
+        // Connect to the GameManager
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Update()
@@ -114,20 +120,27 @@ public class Grapple : MonoBehaviour
 
                     if (hit)
                     {
-                        // Pull the grappled object
-                        hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
-
-                        // Update the grapple length
-                        grappleVector = (Vector3)playerPosition - myHook.transform.position;
-
-                        // Check if grapple is exceeding its max length
-                        if (grappleVector.magnitude > currentGrappleLength)
+                        // If the grappled object is the Fuel...
+                        if (hit.rigidbody.gameObject.CompareTag("Fuel"))
                         {
-                            SwingOnLine();
-                        }
+                            // ... Clear the level
+                            GM.LevelClear();
+                        } else
+                        {
+                            // Pull the grappled object
+                            hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
 
-                        currentGrappleLength = grappleVector.magnitude;
-                        initialDirection = hookDirection;
+                            // Update the grapple length
+                            grappleVector = (Vector3)playerPosition - myHook.transform.position;
+
+                            // Check if grapple is exceeding its max length
+                            if (grappleVector.magnitude > currentGrappleLength)
+                            {
+                                SwingOnLine();
+                            }
+                            currentGrappleLength = grappleVector.magnitude;
+                            initialDirection = hookDirection;
+                        }
                     }
                 }
             }
