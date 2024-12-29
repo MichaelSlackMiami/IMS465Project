@@ -74,10 +74,12 @@ public class UI : MonoBehaviour
         btnExitLevel.SetActive(paused);
         if (paused)
         {
-            btnIcon.sprite = resumeIcon;
+            if (btnIcon)
+                btnIcon.sprite = resumeIcon;
         } else
         {
-            btnIcon.sprite = pauseIcon;
+            if (btnIcon)
+                btnIcon.sprite = pauseIcon;
         }
     }
 

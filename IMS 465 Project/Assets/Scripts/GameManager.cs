@@ -12,7 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private Grapple grapple;
     [SerializeField] private Cam cam;
+    public GameObject mapCam;
     [SerializeField] private UI UI;
+
 
     public bool gameOver = false;
     public bool levelClear = false;
@@ -193,6 +195,10 @@ public class GameManager : MonoBehaviour
             secondaryMusic.clip = tracks[8];
             secondaryMusic.Play();
             Time.timeScale = 0;
+
+            if (mapCam)
+                mapCam.SetActive(true);
+            
         }
         else
         {
@@ -200,6 +206,9 @@ public class GameManager : MonoBehaviour
             primaryMusic.UnPause();
             Time.timeScale = 1;
             grapple.grappleDisabled = false;
+
+            if (mapCam)
+                mapCam.SetActive(false);
         }
     }
     
