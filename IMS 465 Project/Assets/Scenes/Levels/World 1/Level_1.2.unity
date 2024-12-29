@@ -1479,9 +1479,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2213231666812453536, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2814088500993136841, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
       propertyPath: m_Name
       value: Level Essentials
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368676604683581701, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
