@@ -8,7 +8,12 @@ public class UI : MonoBehaviour
 {
     [SerializeField] private GameManager GM;
     [SerializeField] private LevelData LD;
-    [SerializeField] private GameObject TextBG;
+
+    [Header("Menus")]
+    [SerializeField] private GameObject LevelClearMenu;
+    [SerializeField] private GameObject WorldClearMenu;
+    [SerializeField] private GameObject GameOverMenu;
+    [SerializeField] private GameObject PauseMenu;
 
     [Header("Level Clear")]
     [SerializeField] private GameObject txtFuelFound;
@@ -22,15 +27,9 @@ public class UI : MonoBehaviour
 
     [Header("Game Over")]
     [SerializeField] private GameObject txtGameOver;
-    [SerializeField] private GameObject txtClickRetry;
 
     [Header("Pause")]
-    [SerializeField] private GameObject PauseBG;
-    [SerializeField] private GameObject txtPause;
-    [SerializeField] private GameObject btnExitLevel;
-    [SerializeField] private Image btnIcon;
-    [SerializeField] private Sprite pauseIcon;
-    [SerializeField] private Sprite resumeIcon;
+    [SerializeField] private GameObject btnPause;
     private bool paused = false;
 
     [Header("Stars")]
@@ -43,20 +42,6 @@ public class UI : MonoBehaviour
     {
         // Connect to the GM
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-        // Hide all UI elements
-        TextBG.SetActive(false);
-        txtFuelFound.SetActive(false);
-        txtFuelEmpty.SetActive(false);
-        txtClickContinue.SetActive(false);
-        txtGameOver.SetActive(false);
-        txtClickRetry.SetActive(false);
-        PauseBG.SetActive(false);
-        txtPause.SetActive(false);
-        btnExitLevel.SetActive(false);
-        txtWorldClear.SetActive(false);
-        txtFuelFull.SetActive(false);
-        txtClickNext.SetActive(false);
     }
 
     // Update is called once per frame
@@ -68,19 +53,9 @@ public class UI : MonoBehaviour
     public void TogglePause()
     {
         paused = !paused;
+        PauseMenu.SetActive(paused);
         GM.TogglePause(paused);
-        PauseBG.SetActive(paused);
-        txtPause.SetActive(paused);
-        btnExitLevel.SetActive(paused);
-        if (paused)
-        {
-            if (btnIcon)
-                btnIcon.sprite = resumeIcon;
-        } else
-        {
-            if (btnIcon)
-                btnIcon.sprite = pauseIcon;
-        }
+        // Need to change the pause button icon
     }
 
     public void ExitLevel()
@@ -105,7 +80,8 @@ public class UI : MonoBehaviour
 
     public IEnumerator DisplayLevelClear()
     {
-        TextBG.SetActive(true);
+        LevelClearMenu.SetActive(true);
+        btnPause.SetActive(false);
         txtFuelFound.SetActive(true);
         DisplayStars();
             
@@ -116,7 +92,8 @@ public class UI : MonoBehaviour
     }
     public IEnumerator DisplayWorldClear()
     {
-        TextBG.SetActive(true);
+        WorldClearMenu.SetActive(true);
+        btnPause.SetActive(false);
         txtWorldClear.SetActive(true);
         yield return new WaitForSeconds(1.8f);
         txtFuelFull.SetActive(true);
@@ -128,8 +105,8 @@ public class UI : MonoBehaviour
 
     public void DisplayGameOver(string source)
     {
-        TextBG.SetActive(true);
-        txtGameOver.SetActive(true);
+        GameOverMenu.SetActive(true);
+        btnPause.SetActive(false);
         if (source == "Impact")
         {
             int message = Random.Range(1, 4);
@@ -170,7 +147,6 @@ public class UI : MonoBehaviour
         {
             txtGameOver.GetComponent<Text>().text = "The fuel seems to have drifted off!";
         }
-        txtClickRetry.SetActive(true);
         GM.gameOver = true;
     }
 
@@ -188,5 +164,14 @@ public class UI : MonoBehaviour
             if (LD.star3time > LD.time)
                 star3.SetActive(true);
         }
+    }
+
+    public void RetryLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void ToWorldSelect()
+    {
+        SceneManager.LoadScene(2);
     }
 }

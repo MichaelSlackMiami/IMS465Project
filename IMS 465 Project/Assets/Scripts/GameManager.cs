@@ -155,14 +155,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // END OF LEVEL
-        if (gameOver)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                gameOver = false;
-            }
-        } else if (levelClear)
+        if (levelClear)
         {
             if (Input.GetMouseButtonDown(0))
             {
