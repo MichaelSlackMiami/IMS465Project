@@ -996,7 +996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3043887468556499346, guid: 27944f6894e656c4aab43c6d4e3f7dd0, type: 3}
       propertyPath: m_ReferenceResolution.y
-      value: 0
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 5414872112436518629, guid: 27944f6894e656c4aab43c6d4e3f7dd0, type: 3}
       propertyPath: m_Pivot.x
@@ -2165,7 +2165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3043887468556499346, guid: 69cfb4d78ee9f7346993ff025e126ec6, type: 3}
       propertyPath: m_ReferenceResolution.x
-      value: 1400
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 5414872112436518629, guid: 69cfb4d78ee9f7346993ff025e126ec6, type: 3}
       propertyPath: m_Pivot.x
