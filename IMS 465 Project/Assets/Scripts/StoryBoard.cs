@@ -19,7 +19,9 @@ public class StoryBoard : MonoBehaviour
         {
             slide.SetActive(true);
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
+
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
 
             slide.SetActive(false);
         }
