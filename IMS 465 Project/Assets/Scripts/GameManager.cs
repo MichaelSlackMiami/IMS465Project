@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private Grapple grapple;
     [SerializeField] private Cam cam;
-    public GameObject mapCam;
+    [SerializeField] private GameObject mapCam;
     [SerializeField] private UI UI;
 
 
@@ -35,7 +35,13 @@ public class GameManager : MonoBehaviour
             player = GameObject.Find("Player");
             grapple = GameObject.Find("Grapple").GetComponent<Grapple>();
             cam = GameObject.Find("Main Camera").GetComponent<Cam>();
+            mapCam = GameObject.Find("Map Camera");
             UI = GameObject.Find("Level UI").GetComponent<UI>();
+
+            if (cam && mapCam)
+            {
+                StartCoroutine(CameraPan(0.5f, 3, 1));
+            }
         }
     
     }
@@ -68,7 +74,13 @@ public class GameManager : MonoBehaviour
             player = GameObject.Find("Player");
             grapple = GameObject.Find("Grapple").GetComponent<Grapple>();
             cam = GameObject.Find("Main Camera").GetComponent<Cam>();
+            mapCam = GameObject.Find("Map Camera");
             UI = GameObject.Find("Level UI").GetComponent<UI>();
+
+            if (cam && mapCam)
+            {
+                StartCoroutine(CameraPan(0.5f, 3, 1));
+            }
         }
 
         if (level == 1)
@@ -190,8 +202,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
 
             if (mapCam)
-                mapCam.SetActive(true);
-            
+                mapCam.GetComponent<Camera>().enabled = true;
         }
         else
         {
@@ -201,7 +212,7 @@ public class GameManager : MonoBehaviour
             grapple.grappleDisabled = false;
 
             if (mapCam)
-                mapCam.SetActive(false);
+                mapCam.GetComponent<Camera>().enabled = false;
         }
     }
     
@@ -258,5 +269,81 @@ public class GameManager : MonoBehaviour
         cam.followPlayer = false;
         primaryMusic.Stop();
         UI.DisplayGameOver(source);
+    }
+
+    public void Freeze(bool freeze)
+    {
+        cam.followPlayer = !freeze;
+        player.GetComponent<Player>().invincible = freeze;
+
+        if (freeze)
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        else
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+
+        grapple.grappleDisabled = freeze;
+    }
+
+    IEnumerator CameraPan(float timeBuffer, float timePan, float timeStay)
+    {
+        // Freeze game
+        Freeze(true);
+
+        // Buffer time
+        yield return new WaitForSeconds(timeBuffer);
+
+        // Timer variable
+        float timer = 0.0f;
+
+        // Get panning variables
+        Camera movingCam = cam.gameObject.GetComponent<Camera>();
+        Vector3 ogPos = cam.transform.position;
+        float ogSize = cam.gameObject.GetComponent<Camera>().orthographicSize;
+        Vector3 mapPos = mapCam.transform.position;
+        float mapSize = mapCam.GetComponent<Camera>().orthographicSize;
+
+        // Rates to pan out
+        float xRate = (mapPos.x - ogPos.x) / timePan;
+        float yRate = (mapPos.y - ogPos.y) / timePan;
+        float zRate = (mapPos.z - ogPos.z) / timePan;
+        float sizeRate = (mapSize - ogSize) / timePan;
+
+        // Panning out
+        while (timer < timePan)
+        {
+            cam.transform.position = new Vector3(cam.transform.position.x + (xRate * Time.deltaTime), cam.transform.position.y + (yRate * Time.deltaTime), cam.transform.position.z + (zRate * Time.deltaTime));
+            movingCam.orthographicSize += sizeRate * Time.deltaTime;
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        // Ensure correct
+        cam.transform.position = mapPos;
+        movingCam.orthographicSize = mapSize;
+
+        // Pause
+        yield return new WaitForSeconds(timeStay);
+
+        // Reset timer
+        timer = 0.0f;
+
+        // Panning in
+        while (timer < timePan)
+        {
+            cam.transform.position = new Vector3(cam.transform.position.x - (xRate * Time.deltaTime), cam.transform.position.y - (yRate * Time.deltaTime), cam.transform.position.z - (zRate * Time.deltaTime));
+            movingCam.orthographicSize -= sizeRate * Time.deltaTime;
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        // Ensure correct
+        cam.transform.position = ogPos;
+        movingCam.orthographicSize = ogSize;
+
+        // Buffer time
+        yield return new WaitForSeconds(timeBuffer);
+
+        // Unreeze game
+        Freeze(false);
     }
 }
