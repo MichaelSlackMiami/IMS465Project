@@ -6,8 +6,11 @@ public class Cam : MonoBehaviour
 {
     [Header("Player")]
     public GameObject Player;
+    public GameObject Fuel;
     public bool followPlayer = true;
+    public bool followFuel = false;
     private Vector3 playerPos;
+    private Vector3 fuelPos;
 
     [Header("Zoom")]
     // How much the camera should zoom out
@@ -24,6 +27,10 @@ public class Cam : MonoBehaviour
         {
             Player = GameObject.Find("Player");
         }
+        if (Fuel == null)
+        {
+            Fuel = GameObject.Find("Fuel");
+        }
         zoomBase = GetComponent<Camera>().orthographicSize;
     }
 
@@ -39,6 +46,14 @@ public class Cam : MonoBehaviour
             // ... Set the zoom based on player speed
             zoom = Player.GetComponent<Rigidbody2D>().velocity.magnitude * zoomScale;
             GetComponent<Camera>().orthographicSize = zoomBase + zoom;
+        }
+
+        // If I should be following the fuel...
+        if (!followPlayer && followFuel)
+        {
+            // ... Follow the fuel
+            fuelPos = Fuel.transform.position;
+            gameObject.transform.position = new Vector3(fuelPos.x, fuelPos.y, -1);
         }
     }
 }

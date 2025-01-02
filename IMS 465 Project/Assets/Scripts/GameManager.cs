@@ -289,23 +289,31 @@ public class GameManager : MonoBehaviour
         // Freeze game
         Freeze(true);
 
+        // Get panning variables
+        Camera movingCam = cam.gameObject.GetComponent<Camera>();
+        Vector3 ogPos = cam.transform.position;
+        float ogSize = cam.gameObject.GetComponent<Camera>().orthographicSize;
+
+        // Look at fuel
+        cam.followFuel = true;
+        yield return new WaitForEndOfFrame();
+        cam.followFuel = false;
+
+        // Get more panning variables
+        Vector3 mapPos = mapCam.transform.position;
+        float mapSize = mapCam.GetComponent<Camera>().orthographicSize;
+        Vector3 fuelPos = cam.transform.position;
+
         // Buffer time
         yield return new WaitForSeconds(timeBuffer);
 
         // Timer variable
         float timer = 0.0f;
 
-        // Get panning variables
-        Camera movingCam = cam.gameObject.GetComponent<Camera>();
-        Vector3 ogPos = cam.transform.position;
-        float ogSize = cam.gameObject.GetComponent<Camera>().orthographicSize;
-        Vector3 mapPos = mapCam.transform.position;
-        float mapSize = mapCam.GetComponent<Camera>().orthographicSize;
-
         // Rates to pan out
-        float xRate = (mapPos.x - ogPos.x) / timePan;
-        float yRate = (mapPos.y - ogPos.y) / timePan;
-        float zRate = (mapPos.z - ogPos.z) / timePan;
+        float xRate = (mapPos.x - fuelPos.x) / timePan;
+        float yRate = (mapPos.y - fuelPos.y) / timePan;
+        float zRate = (mapPos.z - fuelPos.z) / timePan;
         float sizeRate = (mapSize - ogSize) / timePan;
 
         // Panning out
@@ -326,6 +334,11 @@ public class GameManager : MonoBehaviour
 
         // Reset timer
         timer = 0.0f;
+
+        // Rates to pan in
+        xRate = (mapPos.x - ogPos.x) / timePan;
+        yRate = (mapPos.y - ogPos.y) / timePan;
+        zRate = (mapPos.z - ogPos.z) / timePan;
 
         // Panning in
         while (timer < timePan)
