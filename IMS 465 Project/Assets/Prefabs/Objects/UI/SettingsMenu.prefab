@@ -196,8 +196,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3738646090290916902}
   - component: {fileID: 5059928151240779157}
+  - component: {fileID: 1311215294583959634}
   m_Layer: 5
-  m_Name: FFXSlider
+  m_Name: SFXSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,13 +270,38 @@ MonoBehaviour:
   m_FillRect: {fileID: 8588931195569689636}
   m_HandleRect: {fileID: 2942158379629247972}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 0.75
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1311215294583959634}
+        m_TargetAssemblyTypeName: SoundControl, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1311215294583959634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723544327316286943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb462ed2dcc99574a80323239090a151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 6312f4327b3c4c747a2b6fcbf9822883, type: 2}
 --- !u!1 &760333777973595737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,6 +1808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3744600249168701023}
   - component: {fileID: 8246076503957994104}
+  - component: {fileID: 6869310723516707656}
   m_Layer: 5
   m_Name: MusicSlider
   m_TagString: Untagged
@@ -1855,16 +1882,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 623646491955745247}
   m_HandleRect: {fileID: 8202292157160848820}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 0.75
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 933267357509665633, guid: fa8db4dd1bea1f94dae2789f28c0496b, type: 3}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SetMusicVolume
+      - m_Target: {fileID: 6869310723516707656}
+        m_TargetAssemblyTypeName: SoundControl, Assembly-CSharp
+        m_MethodName: SetVolume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1874,6 +1901,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6869310723516707656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7216281674382730959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb462ed2dcc99574a80323239090a151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 6312f4327b3c4c747a2b6fcbf9822883, type: 2}
 --- !u!1 &7551732661982661637
 GameObject:
   m_ObjectHideFlags: 0

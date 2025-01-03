@@ -2,27 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class SoundControl : MonoBehaviour
 {
-    [SerializeField] private AudioSource[] music;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        music = GameObject.Find("GameManager").GetComponents<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    [SerializeField] private AudioMixer mixer;
     public void SetVolume()
     {
-        foreach (AudioSource source in music)
+        if (gameObject.name == "MusicSlider")
         {
-            source.volume = gameObject.GetComponent<Slider>().value;
+            mixer.SetFloat("MusicVolume", gameObject.GetComponent<Slider>().value);
+        } else if (gameObject.name == "SFXSlider")
+        {
+            mixer.SetFloat("SfxVolume", gameObject.GetComponent<Slider>().value);
         }
     }
 }

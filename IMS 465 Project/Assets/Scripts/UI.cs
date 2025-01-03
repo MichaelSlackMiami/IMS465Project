@@ -30,6 +30,9 @@ public class UI : MonoBehaviour
 
     [Header("Pause")]
     [SerializeField] private GameObject btnPause;
+    [SerializeField] private Image btnPauseIcon;
+    [SerializeField] private Sprite resumeIcon;
+    [SerializeField] private Sprite pauseIcon;
     private bool paused = false;
 
     [Header("Stars")]
@@ -55,7 +58,13 @@ public class UI : MonoBehaviour
         paused = !paused;
         PauseMenu.SetActive(paused);
         GM.TogglePause(paused);
-        // Need to change the pause button icon
+        if (paused)
+        {
+            btnPauseIcon.sprite = resumeIcon;
+        } else
+        {
+            btnPauseIcon.sprite = pauseIcon;
+        }
     }
 
     public void ExitLevel()

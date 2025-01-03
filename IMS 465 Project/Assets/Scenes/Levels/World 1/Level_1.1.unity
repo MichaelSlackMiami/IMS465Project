@@ -771,7 +771,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  Fuel: {fileID: 0}
   followPlayer: 1
+  followFuel: 0
   zoomScale: 0.1
 --- !u!4 &561390504 stripped
 Transform:
@@ -915,6 +917,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1976357055}
     m_Modifications:
+    - target: {fileID: -8316842081672222882, guid: b1764a93c848efa459c99c218272e64b, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 7a1e33d9521e1174db63a79eaa7537a5, type: 2}
     - target: {fileID: 1511804541833223980, guid: b1764a93c848efa459c99c218272e64b, type: 3}
       propertyPath: m_Name
       value: Asteroid Medium (3)

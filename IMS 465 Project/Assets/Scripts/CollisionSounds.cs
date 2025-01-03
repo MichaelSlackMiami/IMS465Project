@@ -5,15 +5,13 @@ using UnityEngine;
 public class CollisionSounds : MonoBehaviour
 {
     [SerializeField] private AudioSource mySFX;
-
-    private float baseVolume;
-    private float volumeScale = 0.12f;
+    private float mixerVolume;
 
     // Start is called before the first frame update
     void Start()
     {
         mySFX = gameObject.GetComponent<AudioSource>();
-        baseVolume = mySFX.volume;
+        mySFX.outputAudioMixerGroup.audioMixer.GetFloat("SfxVolume", out mixerVolume);
     }
 
     // Update is called once per frame
@@ -24,7 +22,7 @@ public class CollisionSounds : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        mySFX.volume = baseVolume * (collision.relativeVelocity.magnitude * volumeScale);
+        mySFX.volume = collision.relativeVelocity.magnitude * mixerVolume;
         mySFX.Play();
     }
 }

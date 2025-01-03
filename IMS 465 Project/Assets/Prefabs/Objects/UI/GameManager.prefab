@@ -98,7 +98,7 @@ AudioSource:
   m_GameObject: {fileID: 3512990568608126395}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -122949234698827867, guid: 6312f4327b3c4c747a2b6fcbf9822883, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.52889806
@@ -194,7 +194,7 @@ AudioSource:
   m_GameObject: {fileID: 3512990568608126395}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -122949234698827867, guid: 6312f4327b3c4c747a2b6fcbf9822883, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -290,7 +290,7 @@ AudioSource:
   m_GameObject: {fileID: 3512990568608126395}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -122949234698827867, guid: 6312f4327b3c4c747a2b6fcbf9822883, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -392,6 +392,7 @@ MonoBehaviour:
   player: {fileID: 0}
   grapple: {fileID: 0}
   cam: {fileID: 0}
+  mapCam: {fileID: 0}
   UI: {fileID: 0}
   gameOver: 0
   levelClear: 0
@@ -433,3 +434,4 @@ MonoBehaviour:
   story_w2: 0
   story_w3: 0
   story_intro: 0
+  story_outro: 0

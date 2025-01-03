@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.47058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1074,7 +1074,7 @@ GameObject:
   - component: {fileID: 2542552787212725749}
   - component: {fileID: 2933203779870118817}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2076,6 +2076,9 @@ MonoBehaviour:
   txtClickNext: {fileID: 6811303673965950631}
   txtGameOver: {fileID: 909860824525004558}
   btnPause: {fileID: 363976400549634042}
+  btnPauseIcon: {fileID: 2933203779870118817}
+  resumeIcon: {fileID: 21300000, guid: e6b968946b9cf894eb56a6832f96e076, type: 3}
+  pauseIcon: {fileID: 21300000, guid: 606a39dd0f97fe94fa95ef2a0b3e9403, type: 3}
   star1: {fileID: 513435480819158908}
   star2: {fileID: 4328828168619311249}
   star3: {fileID: 5792325689578345713}
