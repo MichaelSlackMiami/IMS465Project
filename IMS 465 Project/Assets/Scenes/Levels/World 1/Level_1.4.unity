@@ -384,6 +384,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5840475411589899524, guid: ad92cff2aa293164ba21fd24b66a5a65, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -654712934, guid: 78b7c6b20a4867542872bb44def1063c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1625,7 +1629,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  Fuel: {fileID: 0}
   followPlayer: 1
+  followFuel: 0
   zoomScale: 0.1
 --- !u!81 &1774903321
 AudioListener:
