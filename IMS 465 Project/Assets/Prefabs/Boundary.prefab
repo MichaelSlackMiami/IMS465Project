@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1808724656573049157}
   - component: {fileID: 6502557872536034598}
   - component: {fileID: 6509439680809904729}
-  - component: {fileID: 984631557336203550}
+  - component: {fileID: 7764221513078348947}
   - component: {fileID: 8570123644595013338}
   m_Layer: 2
   m_Name: Boundary
@@ -138,8 +138,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &984631557336203550
-BoxCollider2D:
+--- !u!60 &7764221513078348947
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -180,9 +180,13 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.5, y: 0.5}
+      - {x: -0.5, y: -0.5}
+      - {x: 0.5, y: -0.5}
+      - {x: 0.5, y: 0.5}
+  m_UseDelaunayMesh: 0
 --- !u!114 &8570123644595013338
 MonoBehaviour:
   m_ObjectHideFlags: 0
