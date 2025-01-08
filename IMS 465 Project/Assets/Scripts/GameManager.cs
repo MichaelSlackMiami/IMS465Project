@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource primaryMusic;
     [SerializeField] private AudioSource secondaryMusic;
     [SerializeField] private AudioSource nonLoopingMusic;
+    [SerializeField] private AudioMixer mixer;
 
     private static GameManager instance;
 
@@ -43,7 +45,9 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(CameraPan(0.5f, 3, 1));
             }
         }
-    
+
+        mixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("music_level", 0));
+        mixer.SetFloat("SfxVolume", PlayerPrefs.GetFloat("sfx_level", 0));
     }
 
     void Awake()

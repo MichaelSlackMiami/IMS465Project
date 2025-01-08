@@ -412,6 +412,7 @@ MonoBehaviour:
   primaryMusic: {fileID: 9093329653023833885}
   secondaryMusic: {fileID: -6743911841723397596}
   nonLoopingMusic: {fileID: 3108775169558149883}
+  mixer: {fileID: 24100000, guid: 6312f4327b3c4c747a2b6fcbf9822883, type: 2}
 --- !u!114 &7959966629590713594
 MonoBehaviour:
   m_ObjectHideFlags: 0

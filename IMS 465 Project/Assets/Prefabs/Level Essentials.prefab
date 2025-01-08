@@ -324,6 +324,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 640188835470494634}
     m_Modifications:
     - target: {fileID: 933267357509665633, guid: fa8db4dd1bea1f94dae2789f28c0496b, type: 3}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 6312f4327b3c4c747a2b6fcbf9822883, type: 2}
+    - target: {fileID: 933267357509665633, guid: fa8db4dd1bea1f94dae2789f28c0496b, type: 3}
       propertyPath: mapCam
       value: 
       objectReference: {fileID: 2213231666812453536}
