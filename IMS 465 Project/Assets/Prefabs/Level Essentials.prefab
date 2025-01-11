@@ -559,6 +559,10 @@ PrefabInstance:
       propertyPath: resumeIcon
       value: 
       objectReference: {fileID: 21300000, guid: e6b968946b9cf894eb56a6832f96e076, type: 3}
+    - target: {fileID: 6930554095837198166, guid: f7942717f9a0e69408652e60727551cf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6991886299566317441, guid: f7942717f9a0e69408652e60727551cf, type: 3}
       propertyPath: m_Name
       value: Level UI
