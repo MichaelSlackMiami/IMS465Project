@@ -50,7 +50,11 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (GM == null)
+        {
+            // Connect to the GM
+            GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
     }
 
     public void TogglePause()
@@ -115,6 +119,7 @@ public class UI : MonoBehaviour
     public void DisplayGameOver(string source)
     {
         GameOverMenu.SetActive(true);
+        GameOverMenu.GetComponentInChildren<Toggle>().isOn = GM.showPreview;
         btnPause.SetActive(false);
         if (source == "Impact")
         {
@@ -182,5 +187,10 @@ public class UI : MonoBehaviour
     public void ToWorldSelect()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void TogglePreview()
+    {
+        GM.showPreview = !GM.showPreview;
     }
 }

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     public bool gameOver = false;
     public bool levelClear = false;
+    public bool showPreview = true;
 
     [Header("Music")]
     [SerializeField] private AudioClip[] tracks;
@@ -83,8 +84,14 @@ public class GameManager : MonoBehaviour
 
             if (cam && mapCam)
             {
-                StartCoroutine(CameraPan(0.5f, 3, 1));
+                if (showPreview)
+                    StartCoroutine(CameraPan(0.5f, 3, 1));
             }
+        }
+        else
+        {
+            // resets when visiting a map so that newly selected levels always show preview
+            showPreview = true;
         }
 
         if (level == 1)
