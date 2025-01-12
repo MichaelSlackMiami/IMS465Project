@@ -22,8 +22,17 @@ public class TerminalImpact : MonoBehaviour
         // If the player collided with this object...
         if (collision.gameObject.CompareTag("Player"))
         {
+            // Get the impact vector
+            Vector2 impact = collision.relativeVelocity;
+
+            // Percent of damage is affected by angle to hit (0 = just speed, 1 = fully based on angle)
+            float glanceRatio = 0.5f;
+
+            // Formula for death, not completely linear
+            float impactStrength = (impact.magnitude * (1 - glanceRatio)) + (impact.magnitude * Vector2.Dot(collision.GetContact(0).normal, impact.normalized) * glanceRatio);
+
             // ... If the impact has enough force...
-            if (collision.relativeVelocity.magnitude > terminalImpactThreshold)
+            if (impactStrength > terminalImpactThreshold)
             {
                 if (collision.gameObject.GetComponent<Player>().hasShield)
                 {
