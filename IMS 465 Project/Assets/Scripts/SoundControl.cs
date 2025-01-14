@@ -15,11 +15,11 @@ public class SoundControl : MonoBehaviour
 
         if (gameObject.name == "MusicSlider")
         {
-            slider.value = PlayerPrefs.GetFloat("music_level", 0);
+            slider.value = PlayerPrefs.GetFloat("music_level", 1);
         }
         else if (gameObject.name == "SFXSlider")
         {
-            slider.value = PlayerPrefs.GetFloat("sfx_level", 0);
+            slider.value = PlayerPrefs.GetFloat("sfx_level", 1);
         }
     }
 
@@ -29,13 +29,12 @@ public class SoundControl : MonoBehaviour
 
         if (gameObject.name == "MusicSlider")
         {
-
-            mixer.SetFloat("MusicVolume", level);
+            mixer.SetFloat("MusicVolume", Mathf.Log10(level) * 20);
             PlayerPrefs.SetFloat("music_level", level);
 
         } else if (gameObject.name == "SFXSlider")
         {
-            mixer.SetFloat("SfxVolume", level);
+            mixer.SetFloat("SfxVolume", Mathf.Log10(level) * 20);
             PlayerPrefs.SetFloat("sfx_level", level);
         }
     }

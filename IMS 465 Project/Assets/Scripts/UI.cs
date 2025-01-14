@@ -73,9 +73,6 @@ public class UI : MonoBehaviour
 
     public void ExitLevel()
     {
-        GM.TogglePause(false);
-        TogglePause();
-
         ProgressTracker PT = GM.GetComponent<ProgressTracker>();
         Debug.Log("Got PT!");
 
@@ -182,10 +179,19 @@ public class UI : MonoBehaviour
 
     public void RetryLevel()
     {
+        // If the game was paused when Retry was selected...
+        if (paused)
+        {
+            // ... Unpause the game before restarting
+            GM.TogglePause(false);
+            TogglePause();
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void ToWorldSelect()
     {
+        GM.TogglePause(false);
+        TogglePause();
         SceneManager.LoadScene(2);
     }
 
