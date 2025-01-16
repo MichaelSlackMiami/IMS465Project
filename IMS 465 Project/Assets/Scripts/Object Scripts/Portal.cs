@@ -13,10 +13,12 @@ public class Portal : MonoBehaviour
 
     [SerializeField] private bool enterNotStay = false;
 
+    [SerializeField] private AudioSource mySFX;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        mySFX = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,12 @@ public class Portal : MonoBehaviour
                 collision.transform.position = LinkedPortal.transform.position;
                 gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
                 LinkedPortal.GetComponent<SpriteRenderer>().color = Color.gray;
+
+                // ... Play SFX
+                mySFX.Play();
+
+                // ... Cancel the current grapple
+                GameObject.Find("Grapple").GetComponent<Grapple>().RetractArm();
 
                 // If this portal should reactivate...
                 if (reacivates)
@@ -58,6 +66,12 @@ public class Portal : MonoBehaviour
                 collision.transform.position = LinkedPortal.transform.position;
                 gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
                 LinkedPortal.GetComponent<SpriteRenderer>().color = Color.gray;
+
+                // ... Play SFX
+                mySFX.Play();
+
+                // ... Cancel the current grapple
+                GameObject.Find("Grapple").GetComponent<Grapple>().RetractArm();
 
                 // If this portal should reactivate...
                 if (reacivates)

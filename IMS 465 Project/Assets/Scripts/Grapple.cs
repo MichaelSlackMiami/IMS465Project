@@ -149,30 +149,7 @@ public class Grapple : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0)) // left click
         {
-            // Destroy hook
-            if (myHook)
-            {
-                // Update variables for bringing back line
-                initialDirection = (myHook.transform.position - (Vector3)playerPosition).normalized;
-                currentRaycastLength = (myHook.transform.position - (Vector3)playerPosition).magnitude;
-
-                Destroy(myHook);
-            }
-
-            // Retract line
-            if (lineOut)
-            {
-                // Cancel sending
-                if (sendingOut != null)
-                    StopCoroutine(sendingOut);
-
-                // Start bringing back
-                bringingBack = StartCoroutine(BringBackHook(timeToRetract));
-            }
-
-            force = Vector2.zero;
-            swingForce = Vector2.zero;
-            currentGrappleLength = maxDistance;
+            RetractArm();
         }
 
         if (lineOut)
@@ -354,5 +331,33 @@ public class Grapple : MonoBehaviour
 
         if (unhitHook)
             Destroy(unhitHook);
+    }
+
+    public void RetractArm()
+    {
+        // Destroy hook
+        if (myHook)
+        {
+            // Update variables for bringing back line
+            initialDirection = (myHook.transform.position - (Vector3)playerPosition).normalized;
+            currentRaycastLength = (myHook.transform.position - (Vector3)playerPosition).magnitude;
+
+            Destroy(myHook);
+        }
+
+        // Retract line
+        if (lineOut)
+        {
+            // Cancel sending
+            if (sendingOut != null)
+                StopCoroutine(sendingOut);
+
+            // Start bringing back
+            bringingBack = StartCoroutine(BringBackHook(timeToRetract));
+        }
+
+        force = Vector2.zero;
+        swingForce = Vector2.zero;
+        currentGrappleLength = maxDistance;
     }
 }
