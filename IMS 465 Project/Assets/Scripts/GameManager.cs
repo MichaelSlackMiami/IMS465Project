@@ -19,7 +19,13 @@ public class GameManager : MonoBehaviour
 
     public bool gameOver = false;
     public bool levelClear = false;
+
+    [Header("Panning")]
     public bool showPreview = true;
+    private Coroutine previewPan;
+    public bool isPanning = false;
+    Vector3 ogCamPos;
+    float ogSize;
 
     [Header("Music")]
     [SerializeField] private AudioClip[] tracks;
@@ -40,12 +46,14 @@ public class GameManager : MonoBehaviour
             player = GameObject.Find("Player");
             grapple = GameObject.Find("Grapple").GetComponent<Grapple>();
             cam = GameObject.Find("Main Camera").GetComponent<Cam>();
+            ogCamPos = cam.transform.position;
+            ogSize = cam.gameObject.GetComponent<Camera>().orthographicSize;
             mapCam = GameObject.Find("Map Camera");
             UI = GameObject.Find("Level UI").GetComponent<UI>();
 
             if (cam && mapCam)
             {
-                StartCoroutine(CameraPan(0.5f, 3, 1));
+                previewPan = StartCoroutine(CameraPan(0.5f, 3, 1));
             }
         }
         
@@ -82,13 +90,15 @@ public class GameManager : MonoBehaviour
             player = GameObject.Find("Player");
             grapple = GameObject.Find("Grapple").GetComponent<Grapple>();
             cam = GameObject.Find("Main Camera").GetComponent<Cam>();
+            ogCamPos = cam.transform.position;
+            ogSize = cam.gameObject.GetComponent<Camera>().orthographicSize;
             mapCam = GameObject.Find("Map Camera");
             UI = GameObject.Find("Level UI").GetComponent<UI>();
 
             if (cam && mapCam)
             {
                 if (showPreview)
-                    StartCoroutine(CameraPan(0.5f, 3, 1));
+                    previewPan = StartCoroutine(CameraPan(0.5f, 3, 1));
             }
         }
         else
@@ -202,6 +212,21 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        // PREVIEW
+        if (isPanning)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                StopCoroutine(previewPan);
+                isPanning = false;
+
+                cam.transform.position = ogCamPos;
+                cam.gameObject.GetComponent<Camera>().orthographicSize = ogSize;
+
+                Freeze(false);
+            }
+        }
     }
     public void TogglePause(bool pause)
     {
@@ -300,13 +325,13 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CameraPan(float timeBuffer, float timePan, float timeStay)
     {
+        isPanning = true;
+
         // Freeze game
         Freeze(true);
 
         // Get panning variables
         Camera movingCam = cam.gameObject.GetComponent<Camera>();
-        Vector3 ogPos = cam.transform.position;
-        float ogSize = cam.gameObject.GetComponent<Camera>().orthographicSize;
 
         // Look at fuel
         cam.followFuel = true;
@@ -350,9 +375,9 @@ public class GameManager : MonoBehaviour
         timer = 0.0f;
 
         // Rates to pan in
-        xRate = (mapPos.x - ogPos.x) / timePan;
-        yRate = (mapPos.y - ogPos.y) / timePan;
-        zRate = (mapPos.z - ogPos.z) / timePan;
+        xRate = (mapPos.x - ogCamPos.x) / timePan;
+        yRate = (mapPos.y - ogCamPos.y) / timePan;
+        zRate = (mapPos.z - ogCamPos.z) / timePan;
 
         // Panning in
         while (timer < timePan)
@@ -364,7 +389,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Ensure correct
-        cam.transform.position = ogPos;
+        cam.transform.position = ogCamPos;
         movingCam.orthographicSize = ogSize;
 
         // Buffer time
@@ -372,5 +397,7 @@ public class GameManager : MonoBehaviour
 
         // Unreeze game
         Freeze(false);
+
+        isPanning = false;
     }
 }
