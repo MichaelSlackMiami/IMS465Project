@@ -38,7 +38,7 @@ public class Cam : MonoBehaviour
     void Update()
     {
         // If I should be following the player...
-        if (followPlayer)
+        if (followPlayer && Player)
         {
             // ... Follow the player
             playerPos = Player.transform.position;
