@@ -7,12 +7,14 @@ public class Grapple : MonoBehaviour
     [Header("Grapple Properties")]
     public float maxDistance;
     public float pullStrength;
+    public float ratchetRate;
     public float timeToExtend;
     public float timeToRetract;
     public float waitTime;
     public bool grappleDisabled = false;
 
     private Vector2 force;
+    public float currentPullStrength;
 
     [Header("Hook")]
     public GameObject hook;
@@ -73,12 +75,27 @@ public class Grapple : MonoBehaviour
 
         // Connect to the GameManager
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        // Set grapple strength
+        currentPullStrength = pullStrength;
     }
 
     void Update()
     {
         // Convert position to 2d
         playerPosition = transform.position;
+
+        // Ratchet grapple strength
+        if (myHook)
+        {
+            currentPullStrength += ratchetRate * Time.deltaTime;
+        }
+        else if (currentPullStrength != pullStrength)
+        {
+            currentPullStrength = pullStrength;
+        }
+
+        // Inputs
         if (!grappleDisabled)
         {
             if (Input.GetMouseButtonDown(0)) // left click
@@ -112,7 +129,7 @@ public class Grapple : MonoBehaviour
                     hookDirection = (myHook.transform.position - player.transform.position).normalized;
 
                     // Calculate the grapple force
-                    force = hookDirection * pullStrength * Time.deltaTime;
+                    force = hookDirection * currentPullStrength * Time.deltaTime;
 
                     // Pull the player
                     player.AddForce(force);
@@ -120,12 +137,14 @@ public class Grapple : MonoBehaviour
 
                     if (hit)
                     {
+                        /*
                         // If the grappled object is the Fuel...
                         if (hit.rigidbody.gameObject.CompareTag("Fuel"))
                         {
                             // ... Clear the level
                             GM.LevelClear();
                         } else
+                        */
                         {
                             // Pull the grappled object
                             hit.rigidbody.AddForceAtPosition(-force, myHook.transform.position);
