@@ -19,6 +19,7 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject txtFuelFound;
     [SerializeField] private GameObject txtFuelEmpty;
     [SerializeField] private GameObject txtClickContinue;
+    [SerializeField] private Text clearTime;
 
     [Header("World Clear")]
     [SerializeField] private GameObject txtWorldClear;
@@ -33,6 +34,7 @@ public class UI : MonoBehaviour
     [SerializeField] private Image btnPauseIcon;
     [SerializeField] private Sprite resumeIcon;
     [SerializeField] private Sprite pauseIcon;
+    [SerializeField] private Text pauseClearTime;
     private bool paused = false;
 
     [Header("Stars")]
@@ -68,6 +70,13 @@ public class UI : MonoBehaviour
         } else
         {
             btnPauseIcon.sprite = pauseIcon;
+        }
+
+        //Set and display current time
+        LD = GameObject.Find("LevelData").GetComponent<LevelData>();
+        if (LD)
+        {
+            pauseClearTime.text = "Your current time: " + LD.time.ToString("F1") + "s";
         }
     }
 
@@ -175,6 +184,8 @@ public class UI : MonoBehaviour
             if (LD.star3time > LD.time)
                 star3.SetActive(true);
         }
+        //Display the clear time
+        clearTime.text = "Your time: " + LD.time.ToString("F1") + "s";
     }
 
     public void RetryLevel()

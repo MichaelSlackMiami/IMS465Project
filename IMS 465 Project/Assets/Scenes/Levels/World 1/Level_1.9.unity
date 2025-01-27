@@ -1021,6 +1021,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 540781813388772473, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 640188835470494634, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.1915765
@@ -1061,9 +1065,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2344233952438886955, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2814088500993136841, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
       propertyPath: m_Name
       value: Level Essentials
+      objectReference: {fileID: 0}
+    - target: {fileID: 3969706029852021494, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6222991705154530050, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
       propertyPath: levelIndex
@@ -2418,7 +2430,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  Fuel: {fileID: 0}
   followPlayer: 1
+  followFuel: 0
   zoomScale: 0.1
 --- !u!81 &2085866979
 AudioListener:
