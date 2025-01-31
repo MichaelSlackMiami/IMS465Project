@@ -18,7 +18,7 @@ public class Cam : MonoBehaviour
     // How heavily speed impacts zoom
     public float zoomScale;
     // The baseline zoom before the player moves
-    private float zoomBase;
+    [SerializeField] private float zoomBase = 6.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,6 @@ public class Cam : MonoBehaviour
         {
             Fuel = GameObject.Find("Fuel");
         }
-        zoomBase = GetComponent<Camera>().orthographicSize;
     }
 
     // Update is called once per frame

@@ -936,6 +936,7 @@ MonoBehaviour:
   followPlayer: 1
   followFuel: 0
   zoomScale: 0.1
+  zoomBase: 5
 --- !u!4 &561390504 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7534840750124492745, guid: b1764a93c848efa459c99c218272e64b, type: 3}
