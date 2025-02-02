@@ -41,6 +41,8 @@ public class UI : MonoBehaviour
     [SerializeField] public GameObject star1;
     [SerializeField] public GameObject star2;
     [SerializeField] public GameObject star3;
+    [SerializeField] private GameObject t2Time;
+    [SerializeField] private GameObject t3Time;
 
     // Start is called before the first frame update
     void Start()
@@ -179,13 +181,27 @@ public class UI : MonoBehaviour
             star1.SetActive(true);
 
             if (LD.star2time > LD.time)
+            {
                 star2.SetActive(true);
+            } else
+            {
+                t2Time.GetComponent<Text>().text = LD.star2time.ToString("F1") + " s";
+                t2Time.SetActive(true);
+            }
+                
 
             if (LD.star3time > LD.time)
+            {
                 star3.SetActive(true);
+            } else
+            {
+                t3Time.GetComponent<Text>().text = LD.star3time.ToString("F1") + " s";
+                t3Time.SetActive(true);
+            }
+                
         }
         //Display the clear time
-        clearTime.text = "Your time: " + LD.time.ToString("F1") + "s";
+        clearTime.text = "Your time: " + LD.time.ToString("F1") + " s";
     }
 
     public void RetryLevel()

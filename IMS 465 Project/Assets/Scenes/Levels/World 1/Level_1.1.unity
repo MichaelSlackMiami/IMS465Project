@@ -649,6 +649,10 @@ PrefabInstance:
       value: -49.999634
       objectReference: {fileID: 0}
     - target: {fileID: 6222991705154530050, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
+      propertyPath: star2time
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222991705154530050, guid: 663a76ea576ecbb4180e751fd4e1887e, type: 3}
       propertyPath: levelIndex
       value: 0
       objectReference: {fileID: 0}
@@ -936,7 +940,7 @@ MonoBehaviour:
   followPlayer: 1
   followFuel: 0
   zoomScale: 0.1
-  zoomBase: 5
+  zoomBase: 6.5
 --- !u!4 &561390504 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7534840750124492745, guid: b1764a93c848efa459c99c218272e64b, type: 3}
