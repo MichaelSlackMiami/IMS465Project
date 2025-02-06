@@ -60,6 +60,13 @@ public class Grapple : MonoBehaviour
     private RaycastHit2D hit;
     private bool isFreeBody;
 
+
+    [Header("Throwing")]
+    public float heldTimer;
+    public float heldTime;
+    public bool canThrow;
+    public float throwForce;
+
     [Header("Audio")]
     [SerializeField] private AudioSource GrappleFire;
     [SerializeField] private AudioSource GrappleConnect;
@@ -168,6 +175,8 @@ public class Grapple : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0)) // left click
         {
+            TryThrowObject();
+
             RetractArm();
         }
 
@@ -378,5 +387,40 @@ public class Grapple : MonoBehaviour
         force = Vector2.zero;
         swingForce = Vector2.zero;
         currentGrappleLength = maxDistance;
+    }
+
+    public void TryThrowObject()
+    {
+        // This method is called everytime player unclicks
+
+        // If can throw
+        if (canThrow)
+        {
+            hit.rigidbody.AddForce(throwForce * hookDirection.normalized);
+            canThrow = false;
+        }
+
+        // Reset timer
+        heldTime = 0;
+    }
+
+    public void CheckThrowable(GameObject other)
+    {
+        // If grabbed object is pulled all the way in and can't throw yet
+        if (myHook && other == hit.collider.gameObject && !canThrow)
+        {
+            // Increase the held time for the sake of throwing
+            heldTime += Time.deltaTime;
+
+            // Once held long enough
+            if (heldTime > heldTimer)
+            {
+                // Can throw
+                canThrow = true;
+
+                // Reset timer
+                heldTime = 0;
+            }
+        }
     }
 }

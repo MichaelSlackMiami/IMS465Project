@@ -242,11 +242,16 @@ MonoBehaviour:
   timeToRetract: 0.2
   waitTime: 0.1
   grappleDisabled: 0
+  currentPullStrength: 0
   hook: {fileID: 8629033383342186479, guid: 4460a72211845e648bace613b3705a0e, type: 3}
   lineR: {fileID: 4308011561298282896}
   lineOut: 0
   player: {fileID: 5859144519973088284}
   GM: {fileID: 0}
+  heldTimer: 0.5
+  heldTime: 0
+  canThrow: 0
+  throwForce: 40
   GrappleFire: {fileID: 4116352596986503118}
   GrappleConnect: {fileID: 184170199481972590}
   rangeIndicator: {fileID: 3098599347478857736}
@@ -607,6 +612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
+  myGrapple: {fileID: 3307087488282663506}
   hasShield: 0
   invincible: 0
   bumperMat: {fileID: 6200000, guid: 7e96bccb26ccd0c4f9d8f7c735d9dc78, type: 2}

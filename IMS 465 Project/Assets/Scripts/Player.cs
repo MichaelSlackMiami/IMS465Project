@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private GameManager GameManager;
+    [SerializeField] private Grapple myGrapple;
 
     public bool hasShield = false;
     public bool invincible = false;
@@ -58,6 +59,17 @@ public class Player : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         yield return new WaitForSeconds(time);
         GetComponent<Collider2D>().enabled = true;
+    }
+
+    #endregion
+
+    #region Collisions
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        // If the collided object is lighter than the player,
+        // pass this info to the grapple script for throwing
+        if (collision.rigidbody.mass < GetComponent<Rigidbody2D>().mass)
+            myGrapple.CheckThrowable(collision.gameObject);
     }
 
     #endregion
