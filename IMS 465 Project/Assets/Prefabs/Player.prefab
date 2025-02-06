@@ -237,6 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDistance: 7
   pullStrength: 200
+  pullStengthCap: 800
   ratchetRate: 50
   timeToExtend: 0.1
   timeToRetract: 0.2

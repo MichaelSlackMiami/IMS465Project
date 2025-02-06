@@ -7,6 +7,7 @@ public class Grapple : MonoBehaviour
     [Header("Grapple Properties")]
     public float maxDistance;
     public float pullStrength;
+    public float pullStengthCap;
     public float ratchetRate;
     public float timeToExtend;
     public float timeToRetract;
@@ -96,7 +97,8 @@ public class Grapple : MonoBehaviour
         // Ratchet grapple strength
         if (myHook)
         {
-            currentPullStrength += ratchetRate * Time.deltaTime;
+            if (currentPullStrength < pullStengthCap)
+                currentPullStrength += ratchetRate * Time.deltaTime;
         }
         else if (currentPullStrength != pullStrength)
         {
