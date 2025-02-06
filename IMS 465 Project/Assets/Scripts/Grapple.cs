@@ -68,6 +68,8 @@ public class Grapple : MonoBehaviour
     public bool canThrow;
     public float throwForce;
     public float aimForce;
+    public float ogAngularDrag;
+    public float aimAngularDrag;
 
     [Header("Audio")]
     [SerializeField] private AudioSource GrappleFire;
@@ -192,13 +194,19 @@ public class Grapple : MonoBehaviour
                                 directionFlipper = -1;
                             }
 
+                            
                             // Determine how much it should be adjusted (more force if more off target)
                             float dot = Vector2.Dot(hookDirection.normalized, inputDirection.normalized); // range of (-1, 1)
                             dot *= -0.5f; // range of (0.5, -0.5)
-                            dot += 0.5f; // range of (1, 0)... which means most force for furthest away, none for correct
+                            dot += 1.5f; // range of (2, 1)... which means double force for furthest away, regular for correct
 
+                            /*
                             // Apply a tangent force to the grappled object to aim it around the player
                             hit.rigidbody.AddForce(aimForce * Vector2.Perpendicular(hookDirection.normalized) * directionFlipper * Time.deltaTime);
+                            */
+
+                            // Apply a torque force to the player to rotate the whole system
+                            player.AddTorque(aimForce * directionFlipper * dot * Time.deltaTime);
                         }
                     }
                 }
@@ -431,6 +439,7 @@ public class Grapple : MonoBehaviour
         {
             hit.rigidbody.AddForce(throwForce * hookDirection.normalized);
             canThrow = false;
+            player.angularDrag = ogAngularDrag;
         }
 
         // Reset timer
@@ -450,6 +459,7 @@ public class Grapple : MonoBehaviour
             {
                 // Can throw
                 canThrow = true;
+                player.angularDrag = aimAngularDrag;
 
                 // Reset timer
                 heldTime = 0;

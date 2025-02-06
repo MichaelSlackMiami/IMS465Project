@@ -253,7 +253,9 @@ MonoBehaviour:
   heldTime: 0
   canThrow: 0
   throwForce: 40
-  aimForce: 50
+  aimForce: 80
+  ogAngularDrag: 0
+  aimAngularDrag: 2
   GrappleFire: {fileID: 4116352596986503118}
   GrappleConnect: {fileID: 184170199481972590}
   rangeIndicator: {fileID: 3098599347478857736}
@@ -588,7 +590,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.2
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
