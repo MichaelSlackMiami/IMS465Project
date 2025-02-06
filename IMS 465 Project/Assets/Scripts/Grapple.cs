@@ -66,6 +66,7 @@ public class Grapple : MonoBehaviour
     public float heldTime;
     public bool canThrow;
     public float throwForce;
+    public float aimForce;
 
     [Header("Audio")]
     [SerializeField] private AudioSource GrappleFire;
@@ -166,6 +167,36 @@ public class Grapple : MonoBehaviour
                             }
                             currentGrappleLength = grappleVector.magnitude;
                             initialDirection = hookDirection;
+                        }
+
+                        // This block of code will be used to rotate light objects
+                        // around the player for the sake of aiming them
+                        if (canThrow)
+                        {
+                            // Get mouse position and direction from Player
+                            mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                            Vector2 inputDirection = (mouse - playerPosition).normalized;
+
+                            // Determine direction of rotation with cross product
+                            float crossProduct = (hookDirection.x * inputDirection.y) - (hookDirection.y * inputDirection.x);
+                            int directionFlipper;
+
+                            if (crossProduct > 0) // Need to rotate Counterclockwise
+                            {
+                                directionFlipper = 1;
+                            }
+                            else // Need to rotate Clockwise
+                            {
+                                directionFlipper = -1;
+                            }
+
+                            // Determine how much it should be adjusted (more force if more off target)
+                            float dot = Vector2.Dot(hookDirection.normalized, inputDirection.normalized); // range of (-1, 1)
+                            dot *= -0.5f; // range of (0.5, -0.5)
+                            dot += 0.5f; // range of (1, 0)... which means most force for furthest away, none for correct
+
+                            // Apply a tangent force to the grappled object to aim it around the player
+                            hit.rigidbody.AddForce(aimForce * Vector2.Perpendicular(hookDirection.normalized) * directionFlipper * Time.deltaTime);
                         }
                     }
                 }

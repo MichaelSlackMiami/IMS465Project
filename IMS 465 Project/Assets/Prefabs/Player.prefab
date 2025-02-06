@@ -252,6 +252,7 @@ MonoBehaviour:
   heldTime: 0
   canThrow: 0
   throwForce: 40
+  aimForce: 50
   GrappleFire: {fileID: 4116352596986503118}
   GrappleConnect: {fileID: 184170199481972590}
   rangeIndicator: {fileID: 3098599347478857736}
