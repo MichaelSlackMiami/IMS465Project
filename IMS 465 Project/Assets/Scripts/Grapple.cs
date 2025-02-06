@@ -437,7 +437,11 @@ public class Grapple : MonoBehaviour
         // If can throw
         if (canThrow)
         {
+            // Apply equal and opposite forces
             hit.rigidbody.AddForce(throwForce * hookDirection.normalized);
+            player.AddForce(throwForce * -hookDirection.normalized);
+
+            // Reset status
             canThrow = false;
             player.angularDrag = ogAngularDrag;
         }
