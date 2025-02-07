@@ -252,10 +252,11 @@ MonoBehaviour:
   heldTimer: 0.5
   heldTime: 0
   canThrow: 0
-  throwForce: 40
-  aimForce: 80
+  throwForce: 80
+  aimForce: 200
   ogAngularDrag: 0
-  aimAngularDrag: 2
+  aimAngularDrag: 3
+  canThrowVFX: {fileID: 7514844274794066710, guid: 892a8b332099e5d4598a97c3e68c8c0b, type: 3}
   GrappleFire: {fileID: 4116352596986503118}
   GrappleConnect: {fileID: 184170199481972590}
   rangeIndicator: {fileID: 3098599347478857736}

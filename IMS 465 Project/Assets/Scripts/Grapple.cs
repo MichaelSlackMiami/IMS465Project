@@ -70,6 +70,7 @@ public class Grapple : MonoBehaviour
     public float aimForce;
     public float ogAngularDrag;
     public float aimAngularDrag;
+    public GameObject canThrowVFX;
 
     [Header("Audio")]
     [SerializeField] private AudioSource GrappleFire;
@@ -464,6 +465,7 @@ public class Grapple : MonoBehaviour
                 // Can throw
                 canThrow = true;
                 player.angularDrag = aimAngularDrag;
+                Instantiate(canThrowVFX, myHook.transform.position, Quaternion.identity);
 
                 // Reset timer
                 heldTime = 0;
