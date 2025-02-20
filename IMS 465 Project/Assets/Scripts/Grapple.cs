@@ -312,6 +312,7 @@ public class Grapple : MonoBehaviour
             myHook = Instantiate(hook, hit.transform, true);
             myHook.transform.position = hit.point;
             myHook.transform.up = hit.normal;
+            myHook.layer = 2;
 
             // Play SFX
             GrappleConnect.Play();
