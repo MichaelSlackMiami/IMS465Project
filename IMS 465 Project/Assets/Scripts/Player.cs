@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
 
     #region Powerups
 
-    public void ApplyPowerup(int id, float time)
+    public void ApplyPowerup(int id)
     {
         switch (id)
         {
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
                 Shield();
                 break;
             case 2:
-                StartCoroutine(Phase(time));
+                StartCoroutine(Phase());
                 break;
             default:
                 break;
@@ -54,10 +54,10 @@ public class Player : MonoBehaviour
         GetComponent<SpriteRenderer>().color = Color.white;
     }
 
-    IEnumerator Phase(float time)
+    IEnumerator Phase()
     {
         GetComponent<Collider2D>().enabled = false;
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(3);
         GetComponent<Collider2D>().enabled = true;
     }
 

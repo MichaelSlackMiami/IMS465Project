@@ -5,6 +5,7 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
     [SerializeField] private Player player;
+    private Storage storage;
 
     public int id;
     public float time;
@@ -13,6 +14,7 @@ public class Powerup : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
+        storage = GameObject.Find("Storage").GetComponent<Storage>();
     }
 
     // Update is called once per frame
@@ -26,8 +28,7 @@ public class Powerup : MonoBehaviour
         // When the Player collides with this object...
         if (collision.gameObject.CompareTag("Player"))
         {
-            player.ApplyPowerup(id, time);
-
+            storage.HoldPowerUp(id);
             Destroy(gameObject);
         }
     }
